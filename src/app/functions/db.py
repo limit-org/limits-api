@@ -7,7 +7,7 @@ from fastapi import HTTPException
 
 # this func. returns the version of the sql database.
 # good for testing if this works.
-def returnVersion():
+async def returnVersion():
     # start timer
     task_start_time = time.time()
 
@@ -31,7 +31,7 @@ def returnVersion():
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
         error = str(error).replace("\'", "\"")
-        logErrorToDB(errortext="db.py: "+str(error))
+        await logErrorToDB(errortext=str(error))
         time_task_took = time.time() - task_start_time
         raise HTTPException(
             status_code=500,

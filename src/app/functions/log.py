@@ -4,7 +4,7 @@ import psycopg2
 from .dbconfig import config
 
 
-def logErrorToDB(errortext: str):  # log any server side errors to db
+async def logErrorToDB(errortext: str):  # log any server side errors to db
     unixtimestamp = int(str(time.time()).split(".")[0])  # if you want to reduce imports, use the timestamp of
 
     # replace empty string with "Unknown error"

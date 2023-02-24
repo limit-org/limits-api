@@ -9,7 +9,7 @@ from ..dbconfig import config
 from ..log import logErrorToDB
 
 
-def login(username, password, user_agent, client_host):
+async def login(username, password, user_agent, client_host):
     # start timer
     task_start_time = time.time()
 

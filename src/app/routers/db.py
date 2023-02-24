@@ -7,5 +7,5 @@ router = APIRouter()
 
 @router.get("/db/version", tags=["db"])
 async def get_db_version():
-    # return returnVersion()
-    return "This endpoint is potentially dangerous in a production environment: It has been disabled."
+    return await returnVersion()
+    # return "This endpoint is potentially dangerous in a production environment: It has been disabled."

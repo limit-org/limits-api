@@ -6,7 +6,7 @@ from ..dbconfig import config
 from ..log import logErrorToDB
 
 
-def logout(username, usersessionkey):
+async def logout(username, usersessionkey):
     # start timer
     task_start_time = time.time()
 
@@ -75,7 +75,7 @@ def logout(username, usersessionkey):
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
         error = str(error).replace("\'", "\"")
-        logErrorToDB(errortext=error)
+        await logErrorToDB(errortext=error)
         time_task_took = time.time() - task_start_time
         raise HTTPException(
             status_code=500,

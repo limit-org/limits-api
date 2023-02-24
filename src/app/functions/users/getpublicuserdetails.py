@@ -7,7 +7,7 @@ from ..dbconfig import config
 from ..log import logErrorToDB
 
 
-def getpublicuserinfo(username):
+async def getpublicuserinfo(username):
     # start timer
     task_start_time = time.time()
 
@@ -73,7 +73,7 @@ def getpublicuserinfo(username):
 
     except (Exception, psycopg2.DatabaseError) as error:
         error = str(error).replace("\'", "\"")
-        logErrorToDB(errortext=error)
+        await logErrorToDB(errortext=error)
         time_task_took = time.time() - task_start_time
         raise HTTPException(
             status_code=500,
