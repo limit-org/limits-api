@@ -1,0 +1,6 @@
+TODO List
+
+[ ] Make it so users can upload media to the server
+[ ] Make it so users can pull media from the server
+[ ] Remove EVERY print statement from API codebase
+[ ] Improve error logging
