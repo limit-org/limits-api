@@ -16,7 +16,7 @@ Written by Reiko (https://github.com/acreiko)
  - [ ] Adding an alias/name (Should we do??)
 
 ### Posts
- - [ ] Send text only posts
+ - [x] Send text only posts
  - [ ] Send text posts with media
  
 ### Topics
