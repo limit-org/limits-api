@@ -4,6 +4,7 @@ import psycopg2
 from fastapi import HTTPException
 import bcrypt
 import secrets
+import traceback
 
 from ..dbconfig import config
 from ..log import logErrorToDB
@@ -97,11 +98,9 @@ async def login(username, password, user_agent, client_host):
                         "error_code": 0
                     }
 
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-        error = str(error).replace("\'", "\"")
-        logErrorToDB(errortext=error)
+    except (Exception, psycopg2.DatabaseError) :
         time_task_took = time.time() - task_start_time
+        await logErrorToDB(str(traceback.format_exc()), timetaken=time_task_took)
         raise HTTPException(
             status_code=500,
             detail={

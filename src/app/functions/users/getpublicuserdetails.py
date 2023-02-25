@@ -2,6 +2,7 @@ import time
 import csv
 import psycopg2
 from fastapi import HTTPException
+import traceback
 
 from ..dbconfig import config
 from ..log import logErrorToDB
@@ -71,10 +72,9 @@ async def getpublicuserinfo(username):
                     }
                 }
 
-    except (Exception, psycopg2.DatabaseError) as error:
-        error = str(error).replace("\'", "\"")
-        await logErrorToDB(errortext=error)
+    except (Exception, psycopg2.DatabaseError):
         time_task_took = time.time() - task_start_time
+        await logErrorToDB(str(traceback.format_exc()), timetaken=time_task_took)
         raise HTTPException(
             status_code=500,
             detail={
