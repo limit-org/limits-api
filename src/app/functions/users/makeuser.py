@@ -2,12 +2,13 @@ import re
 import time
 import psycopg2
 from fastapi import HTTPException
+import traceback
 
 from ..dbconfig import config
 from ..log import logErrorToDB
 
 
-def makeUser(username, hashedpassword, email, ipaddress):
+async def makeUser(username, hashedpassword, email, ipaddress):
     # start timer
     task_start_time = time.time()
 
@@ -38,8 +39,6 @@ def makeUser(username, hashedpassword, email, ipaddress):
                             "time_took": time_task_took
                         }
                     )
-                # replace stuff in username with better stuff
-
 
                 # check if username already exists
                 cur.execute(
@@ -91,16 +90,14 @@ def makeUser(username, hashedpassword, email, ipaddress):
                 detail={
                     "error_code": "1",
                     "error": "Email not valid.",
-                    "UIMessage": "This email doesn't look like an email...",
+                    "UIMessage": "That doesn't look like an email...",
                     "time_took": time_task_took
                 }
             )
 
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-        error = str(error).replace("\'", "\"")
-        logErrorToDB(errortext=error)
+    except (Exception, psycopg2.DatabaseError):
         time_task_took = time.time() - task_start_time
+        await logErrorToDB(str(traceback.format_exc()), timetaken=time_task_took)
         raise HTTPException(
             status_code=500,
             detail={
