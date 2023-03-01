@@ -6,7 +6,7 @@ from fastapi import HTTPException
 import traceback
 
 
-async def makepost(textcontent, attachedmedia, posttopic, username, sessionkey):
+async def makepost(posttitle, textcontent, attachedmedia, posttopic, username, sessionkey):
     # start timer
     task_start_time = time.time()
 
@@ -38,6 +38,28 @@ async def makepost(textcontent, attachedmedia, posttopic, username, sessionkey):
                 if sessioncookie[0] == sessionkey:  # correct sesh key
                     time_task_took = time.time() - task_start_time
 
+                    # is user allowed to post?
+                    cur.execute(
+                        "SELECT (allowedtopost) FROM users WHERE username=%s",
+                        (username,)
+                    )
+                    allowedtopost = cur.fetchone()
+
+                    if not allowedtopost[0]:
+                        time_task_took = time.time() - task_start_time
+                        return {
+                            "detail": {
+                                "APImessage": "failure",
+                                "error": "User not allowed to post.",
+                                "UIMessage": "You're not allowed to post on limits.",
+                                "username": username,
+                                "attempt_time": int(str(time.time()).split(".")[0]),
+                            },
+                            "time_took": time_task_took,
+                            "error_code": 0
+                        }
+
+                    # if continuing, they are allowed to post.
                     # get user id
                     cur.execute(
                         "SELECT (userid) FROM users WHERE username=%s",
@@ -51,10 +73,10 @@ async def makepost(textcontent, attachedmedia, posttopic, username, sessionkey):
 
                     # upload media to cock db
                     cur.execute(
-                        "INSERT INTO posts (id, authorid, textcontent, attachedmedia, unixtimestamp, topic) "
-                        "VALUES (%s, %s, %s, %s, %s, %s)",
+                        "INSERT INTO posts (id, authorid, textcontent, attachedmedia, unixtimestamp, topic, posttitle) "
+                        "VALUES (%s, %s, %s, %s, %s, %s, %s)",
                         ((highest_id + 1), userid, textcontent, attachedmedia,
-                         int(str(time.time()).split(".")[0]), posttopic)
+                         int(str(time.time()).split(".")[0]), posttopic, posttitle)
                     )
                     conn.commit()
 
