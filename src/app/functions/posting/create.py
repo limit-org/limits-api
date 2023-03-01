@@ -52,7 +52,7 @@ async def makepost(textcontent, attachedmedia, posttopic, username, sessionkey):
                     # upload media to cock db
                     cur.execute(
                         "INSERT INTO posts (id, authorid, textcontent, attachedmedia, unixtimestamp, topic) "
-                        "VALUES (%s, %s, %s, %s, %s)",
+                        "VALUES (%s, %s, %s, %s, %s, %s)",
                         ((highest_id + 1), userid, textcontent, attachedmedia,
                          int(str(time.time()).split(".")[0]), posttopic)
                     )
