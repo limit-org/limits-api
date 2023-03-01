@@ -4,7 +4,7 @@ import psycopg2
 from .dbconfig import config
 
 
-async def logErrorToDB(errortext: str, timetaken: int):  # log any server side errors to db
+async def logErrorToDB(errortext: str, timetaken: float):  # log any server side errors to db
     # replace empty string with "Unknown error"
     if not errortext:
         errortext = "Unknown error"
