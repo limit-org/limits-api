@@ -4,12 +4,12 @@ import psycopg2
 from .dbconfig import config
 
 
-async def logErrorToDB(errortext: str, unixtime: int, timetaken):  # log any server side errors to db
+async def logErrorToDB(errortext: str, timetaken: int):  # log any server side errors to db
     # replace empty string with "Unknown error"
     if not errortext:
         errortext = "Unknown error"
-    if not unixtime:
-        unixtime = int(str(time.time()).split(".")[0])
+
+    unixtime = int(str(time.time()).split(".")[0])
 
     try:
         conn = psycopg2.connect(config())
