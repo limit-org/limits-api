@@ -67,31 +67,4 @@ async def createpost(username: str = Form(), sessionkey: str = Form(),
             "time_took": time_task_took,
             "error_code": 0
         }
-
-    if posttopic == "meta/news":  # if the user is trying to post in the meta/news topic
-        conn = psycopg2.connect(config())
-
-        with conn.cursor() as cur:
-            cur.execute(
-                "SELECT (trusted) FROM users WHERE username = %s",
-                (username,)
-            )
-            TORMod = cur.fetchone()
-
-        if not TORMod[0]:
-            print(TORMod[0])
-            time_task_took = time.time() - time_task_started
-            return {
-                "detail": {
-                    "APImessage": "failure",
-                    "error": "Invalid post topic.",
-                    "UIMessage": "You're not allowed to post in this topic.",
-                    "username": username,
-                    "attempt_time": int(str(time.time()).split(".")[0]),
-                },
-                "time_took": time_task_took,
-                "error_code": 0
-            }
-        return await makepost(posttitle, postcontent, attachedmedia, posttopic, username, sessionkey)
-    else:
-        return await makepost(posttitle, postcontent, attachedmedia, posttopic, username, sessionkey)
+    return await makepost(posttitle, postcontent, attachedmedia, posttopic, username, sessionkey)

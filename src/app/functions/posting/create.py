@@ -59,6 +59,31 @@ async def makepost(posttitle, textcontent, attachedmedia, posttopic, username, s
                             "error_code": 0
                         }
 
+                    # if the user is trying to post in the meta/news topic, check that they're allowed to
+                    if posttopic == "meta/news":
+                        conn = psycopg2.connect(config())
+
+                        with conn.cursor() as cur:
+                            cur.execute(
+                                "SELECT (trusted) FROM users WHERE username = %s",
+                                (username,)
+                            )
+                            TORMod = cur.fetchone()
+
+                        if not TORMod[0]:  # if not trusted or a mod
+                            time_task_took = time.time() - task_start_time
+                            return {
+                                "detail": {
+                                    "APImessage": "failure",
+                                    "error": "Invalid post topic.",
+                                    "UIMessage": "You're not allowed to post in this topic.",
+                                    "username": username,
+                                    "attempt_time": int(str(time.time()).split(".")[0]),
+                                },
+                                "time_took": time_task_took,
+                                "error_code": 0
+                            }
+
                     # if continuing, they are allowed to post.
                     # get user id
                     cur.execute(
