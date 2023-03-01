@@ -99,7 +99,7 @@ async def login(username, password, user_agent, client_host):
                         "error_code": 0
                     }
 
-    except (Exception, psycopg2.DatabaseError) :
+    except (Exception, psycopg2.DatabaseError):
         time_task_took = time.time() - task_start_time
         await logErrorToDB(str(traceback.format_exc()), timetaken=time_task_took)
         raise HTTPException(

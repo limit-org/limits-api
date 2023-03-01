@@ -1,6 +1,3 @@
-import io
-
-import magic
 import psycopg2
 from ..dbconfig import config
 import time
@@ -59,11 +56,10 @@ async def servemedia(contentid):
                         "error_code": 0
                     }
 
-                # get content type
-                bytesData = io.BytesIO()
-                bytesData.write(base64.b64decode(media64))
-                bytesData.seek(0)  # Jump to the beginning of the file-like interface to read all content!
-                mediatype = magic.from_buffer(bytesData.read())
+                # # get content type
+                # bytesData = io.BytesIO()
+                # bytesData.write(base64.b64decode(media64))
+                # bytesData.seek(0)  # Jump to the beginning of the file-like interface to read all content!
 
                 # de base64 media
                 media64 = base64.b64decode(media64)
