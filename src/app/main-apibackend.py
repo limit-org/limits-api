@@ -25,6 +25,11 @@ app.include_router(
 )
 
 app.include_router(
+    media.router,
+    tags=["media"]
+)
+
+app.include_router(
     posts.router,
     tags=["posts"]
 )
