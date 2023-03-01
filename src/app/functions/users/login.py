@@ -77,13 +77,14 @@ async def login(username, password, user_agent, client_host):
                         "error_code": 0
                     }
                 else:
-                    print('Password is incorrect')
                     lalVar = f"Failed login attempt., {client_host}, {user_agent}"
                     # modify the lastaccountlogin field now to show a failed attempt. this does not logout the user
                     cur.execute(
                         "UPDATE users SET lastaccountlogin=%s WHERE username=%s",
                         (lalVar, username)
                     )
+                    conn.commit()
+
                     # calculate time taken to do the thing
                     time_task_took = time.time() - task_start_time
 
