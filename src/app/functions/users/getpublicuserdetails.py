@@ -35,9 +35,10 @@ async def getpublicuserinfo(username):
                 # Extract the individual values from the list
                 user_id, username, unixjoin, bio, modnotes, is_trusted, is_mod, awards, email, is_email_public, \
                     is_official = fields
+
                 # Remove the parentheses from the first and last values
                 user_id = user_id[1:]
-                is_email_public = is_email_public[:-1]
+                is_official = is_official[:-1]
 
                 if is_email_public == "f":
                     email = "*******@provider.tld"
@@ -55,7 +56,7 @@ async def getpublicuserinfo(username):
                             "awards": awards,
                             "email": email,
                             "is_email_public": is_email_public,
-                            "official": str(is_official).replace(")", "")
+                            "official": is_official
                         },
                     },
                     "time_took": time_task_took,
@@ -74,7 +75,7 @@ async def getpublicuserinfo(username):
 
     except (Exception, psycopg2.DatabaseError):
         time_task_took = time.time() - task_start_time
-        await logErrorToDB(str(traceback.format_exc()), timetaken=time_task_took)
+        await logErrorToDB(str(traceback.format_exc()), timetaken=int(time_task_took))
         raise HTTPException(
             status_code=500,
             detail={
