@@ -22,7 +22,8 @@ Written by Reiko (https://github.com/acreiko)
  - [x] Send text only posts (see note #0)
  - [ ] Send text posts with media
  
-### Topics
+### Site Usability
+ - [ ] Add search cababilities using Meilisearch
  - [ ] Create topics for users to post to (THey work like e.g: "hacking/osint", "networking/LAN", etc..)
 
 ### Moderation
@@ -44,7 +45,6 @@ Written by Reiko (https://github.com/acreiko)
  - [ ] All/most cases of a user typing invalid parameters (Very important)
  
 ### Security
-
 - [ ] Secure hashing/salting/encryption algorithms for sensitive stored & transferred data (SHA-256 & AES-256)
 - [ ] User-supplied input field sanitization (XSS/SQLi)
 - [ ] User password minimums (at least 8 chars, 2 special chars, etc.)
