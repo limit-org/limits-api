@@ -56,6 +56,7 @@ async def servemedia(contentid):
                         "error_code": 0
                     }
 
+                # not needed for me, might be for others so we will leave this here.
                 # # get content type
                 # bytesData = io.BytesIO()
                 # bytesData.write(base64.b64decode(media64))
