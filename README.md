@@ -12,9 +12,11 @@ Written by Reiko (https://github.com/acreiko)
  - [x] Logging in
  - [x] Logging out
  - [ ] Modifying personal details (to add + what PD's should we add?)
- - [ ] Changing password
+ - [x] Changing password
  - [ ] Adding a profile picture
  - [ ] Adding an alias/name (Should we do??)
+ - [ ] Currently online/offline
+ - [ ] Custom status (???)
 
 ### Posts
  - [x] Send text only posts (see note #0)
