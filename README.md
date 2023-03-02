@@ -15,6 +15,8 @@ Written by Reiko (https://github.com/acreiko)
  - [ ] Changing password
  - [ ] Adding a profile picture
  - [ ] Adding an alias/name (Should we do??)
+ - [ ] Currently online/offline
+ - [ ] Custom status (???)
 
 ### Posts
  - [x] Send text only posts (see note #0)
