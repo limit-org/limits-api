@@ -7,6 +7,7 @@ from functions.users.makeuser import makeUser
 from functions.users.getpublicuserdetails import getpublicuserinfo
 from functions.users.login import login
 from functions.users.logout import logout
+from functions.users.changepassword import changepwd
 
 router = APIRouter()
 
@@ -100,3 +101,10 @@ async def getPublicUserDetails(username):
 @router.post('/users/logout/', tags=["user"])
 async def logoutAsUser(username: str = Form(), sessionkey: str = Form()):
     return await logout(username, sessionkey)
+
+
+@router.put('/users/resetpassword/', tags=["user"])
+async def changepassword(request: Request, username: str = Form(), password: str = Form(), newpass: str = Form()):
+    client_host = request.client.host
+    user_agent = Header(default=None)
+    return await changepwd(username, password, newpass, client_host, user_agent)
