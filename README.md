@@ -45,5 +45,17 @@ Written by Reiko (https://github.com/acreiko)
  
 ### Security
 
+- [ ] Secure hashing/salting/encryption algorithms for sensitive stored & transferred data (SHA-256 & AES-256)
+- [ ] User-supplied input field sanitization (XSS/SQLi)
+- [ ] User password minimums (at least 9 chars, 2 special chars, etc.)
+- [ ] User-uploaded document/media validation 
+- [ ] Proper access controls for accounts/posts/admin pages
+- [ ] API whitelists for accessing urls/ports 
+- [ ] No weak/default passwords for admin accounts
+- [ ] No plain-text passwords in DB or source code
+- [ ] No sensitive system information in user-accesible pages (source, github, etc.)
+- [ ] Use LIMIT or equivalent database controls to limit mass disclosure of records 
+- [ ] Use signatures to verify software/data integrity
+
 ### Notes
  - Note #0: media attachment works, but this is not verified if this method will stay the same, or if it even currently works.
