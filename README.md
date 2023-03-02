@@ -47,7 +47,7 @@ Written by Reiko (https://github.com/acreiko)
 
 - [ ] Secure hashing/salting/encryption algorithms for sensitive stored & transferred data (SHA-256 & AES-256)
 - [ ] User-supplied input field sanitization (XSS/SQLi)
-- [ ] User password minimums (at least 9 chars, 2 special chars, etc.)
+- [ ] User password minimums (at least 8 chars, 2 special chars, etc.)
 - [ ] User-uploaded document/media validation 
 - [ ] Proper access controls for accounts/posts/admin pages
 - [ ] API whitelists for accessing urls/ports 
