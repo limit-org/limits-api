@@ -3,11 +3,11 @@ import time
 import psycopg2
 from fastapi import HTTPException
 import bcrypt
-import secrets
 import traceback
 
 from ..dbconfig import config
 from ..log import logErrorToDB
+from ..passwordstandards import CheckPassword
 
 
 async def changepwd(username, password, newpass, clienthost, useragent):
@@ -57,24 +57,14 @@ async def changepwd(username, password, newpass, clienthost, useragent):
                     )
 
                     # does password conform to standards?
-                    if len(newpass) >= 257:
+                    pwc = CheckPassword(plainTextPass=password, username=username)
+                    if pwc != 0:
                         time_task_took = time.time() - task_start_time
                         return {
                             "detail": {
                                 "error_code": "1",
-                                "error": "Password too long.",
-                                "UIMessage": "Stop being paranoid. Your password does not need to be over 256 "
-                                             "characters long.",
-                                "time_took": time_task_took
-                            }
-                        }
-                    if len(newpass) <= 7:  # equal to or less than 7 characters
-                        time_task_took = time.time() - task_start_time
-                        return {
-                            "detail": {
-                                "error_code": "1",
-                                "error": "Password not long enough.",
-                                "UIMessage": "Passwords need to be at least 8 characters long.",
+                                "error": str(pwc['err']),
+                                "UIMessage": str(pwc['ui']),
                                 "time_took": time_task_took
                             }
                         }

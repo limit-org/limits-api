@@ -8,14 +8,15 @@ from functions.users.getpublicuserdetails import getpublicuserinfo
 from functions.users.login import login
 from functions.users.logout import logout
 from functions.users.changepassword import changepwd
+from functions.passwordstandards import CheckPassword
 
 router = APIRouter()
 
 
 class User(BaseModel):
-    username:   str
-    password:   str
-    email:      str
+    username: str
+    password: str
+    email: str
     sessionkey: str
 
 
@@ -49,36 +50,27 @@ async def createuser(request: Request, username: str = Form(), password: str = F
             }
         }
 
-    if len(password) >= 257:
-        time_task_took = time.time() - time_task_started
-        return {
-            "detail": {
-                "error_code": "1",
-                "error": "Password too long.",
-                "UIMessage": "Stop being paranoid. Your password does not need to be over 256 characters long.",
-                "time_took": time_task_took
-            }
-        }
-
-    # check password
-    if len(password) <= 7:  # equal to or less than 7 characters
-        time_task_took = time.time() - time_task_started
-        return {
-            "detail": {
-                "error_code": "1",
-                "error": "Password not long enough.",
-                "UIMessage": "Passwords need to be at least 8 characters long.",
-                "time_took": time_task_took
-            }
-        }
     else:
+        # does password conform to standards?
+        pwc = CheckPassword(plainTextPass=password, username=username)
+        if pwc != 0:
+            time_task_took = time.time() - time_task_started
+            return {
+                "detail": {
+                    "error_code": "1",
+                    "error": str(pwc["err"]),
+                    "UIMessage": str(pwc["ui"]),
+                    "time_took": time_task_took
+                }
+            }
+
         # Generate a salt for the password
         salt = bcrypt.gensalt()
         # Hash the password using the salt
         hashed_password = str(bcrypt.hashpw(str(password).encode('utf-8'), salt)).replace("'", "\"")
 
         ipaddress = request.client.host
-        return await makeUser(username, hashed_password, email, ipaddress)
+        return await makeUser(username, hashed_password, email, ipaddress, time_task_started)
 
 
 @router.post('/users/login/', tags=["user"])
