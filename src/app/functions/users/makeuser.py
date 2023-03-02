@@ -8,9 +8,7 @@ from ..dbconfig import config
 from ..log import logErrorToDB
 
 
-async def makeUser(username, hashedpassword, email, ipaddress):
-    # start timer
-    task_start_time = time.time()
+async def makeUser(username, hashedpassword, email, ipaddress, task_start_time):
 
     try:
         conn = psycopg2.connect(config())
