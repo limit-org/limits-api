@@ -41,6 +41,7 @@ Written by Reiko (https://github.com/acreiko)
  - [ ] SQL injection and if it's possible (Top priority)
  - [ ] All/most cases of a user typing invalid parameters (Very important)
  
+### Security
 
 ### Notes
  - Note #0: media attachment works, but this is not verified if this method will stay the same, or if it even currently works.
