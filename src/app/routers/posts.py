@@ -36,8 +36,9 @@ async def createpost(username: str = Form(), sessionkey: str = Form(),
         "tech/general", "tech/opensource", "tech/linux", "tech/microsoft", "tech/apple", "tech/servers", "tech/ai",
         "tech/databases", "tech/robotics", "tech/thefuture",
         "files/audio", "files/video", "files/documents",  # for discussion on... files?
-        "programming/python", "programming/js", "programming/rust", "programming/go", "programming/java",
-        "programming/other",  # programming (duh)
+        "programming/python", "programming/js", "programming/rust", "programming/go", "programming/java", 
+        "programming/gaming", "programming/other",  # programming (duh)
+        "gaming/cheats", "gaming/other",  # gaming
     ]
     # ADD MORE
 
