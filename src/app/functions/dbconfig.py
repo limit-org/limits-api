@@ -1,8 +1,6 @@
 from configparser import ConfigParser
-from loguru import logger
 
 
-@logger.catch
 def config(filename='../../database.ini', section='db'):
     # create a parser
     parser = ConfigParser()
@@ -20,3 +18,17 @@ def config(filename='../../database.ini', section='db'):
         raise Exception('Section {0} not found in the {1} file'.format(section, filename))
 
     return db
+
+
+def meilisearchConfig(filename='../../database.ini', section='ms'):
+    # create a parser
+    parser = ConfigParser()
+    # read config file
+    parser.read(filename)
+
+    params = parser.items(section)
+
+    msdbURL = params[0][1]  # get meilisearch db url
+    msdbKEY = params[1][1]  # get meilisearch admin key
+
+    return msdbURL, msdbKEY
