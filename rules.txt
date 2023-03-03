@@ -1,0 +1,45 @@
+Usernames:
+ - Min 3 chars
+ - Max 25 chars
+
+
+Passwords:
+ - Min 8 chars
+ - Max 256 chars
+ - Has to contain a digit and a special character
+ - Cannot contain your email or username
+
+ 
+Moderation:
+ - Banning a user must be agreed to by at least two moderators except in severe cirumstances such as posting content that is listed within Content Posting's "Bannable content" section.
+ - When mod A is waiting for an agreement from mod B, mod A may temporarily block a user from posting, commenting, and uploading media.
+ - ANY RULE CAN BE USED AT MOD DISCRETION, HOWEVER THIS REQUIRES AT LEAST ONE OTHER MOD TO AGREE TO. If users would like to change a rule, a poll will be held.
+ - When a user posts anything with a link in it, action will be taken depending if the link is banned/watched. Some links will warn and block it, others will mute for further consideration and the worst of the worst links will instantly ban users.
+ 
+ 
+Content Posting:
+ Allowed content. Content that is:
+  - Relevant (to the site or topic)
+  - Interesting
+  - Helpful and encouraging
+  - Informational
+  - Funny
+  - Engaging
+  is and always will be allowed on Limits. No punishment or warnings for this content.
+
+ Warnable content. Content that is:
+  - Inapropriate for the topic or conversation
+  - Does not contribute to the discussion
+  - Personal attacks to others in any manner (members or not)
+
+ Bannable content. Content that is:
+  - Any sexual depiction of minors or animals (other than humans)
+  - Any glorification of Zoophilia/Pedophilia
+  - Gore
+  - Content that is very disturbing in nature
+  - Glorifies or promotes swatting
+
+
+Uploading media:
+ - Filesize limit for normal members is 8MB
+ - Filesize limit for trusted/moderator/admins is 30MB
