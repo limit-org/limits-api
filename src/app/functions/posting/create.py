@@ -4,6 +4,8 @@ import time
 from functions.log import logErrorToDB
 from fastapi import HTTPException
 import traceback
+from ..istrustedormod import checkTORM
+from functions.meilisearch.MSIndex import IndexPost
 
 
 async def makepost(posttitle, textcontent, attachedmedia, posttopic, username, sessionkey):
@@ -61,17 +63,8 @@ async def makepost(posttitle, textcontent, attachedmedia, posttopic, username, s
 
                     # if the user is trying to post in the meta/news topic, check that they're allowed to
                     if posttopic == "meta/news":
-                        conn = psycopg2.connect(config())
-
-                        with conn.cursor() as cur:
-                            cur.execute(
-                                "SELECT (trusted) FROM users WHERE username = %s",
-                                (username,)
-                            )
-                            TORMod = cur.fetchone()
-
-                        if not TORMod[0]:  # if not trusted or a mod
-                            time_task_took = time.time() - task_start_time
+                        TORM = checkTORM(username)
+                        if TORM == 1:  # not trusted or a mod
                             return {
                                 "detail": {
                                     "APImessage": "failure",
@@ -84,7 +77,7 @@ async def makepost(posttitle, textcontent, attachedmedia, posttopic, username, s
                                 "error_code": 0
                             }
 
-                    # if continuing, they are allowed to post.
+                    # if continuing, they are allowed to post here.
                     # get user id
                     cur.execute(
                         "SELECT (userid) FROM users WHERE username=%s",
@@ -96,14 +89,21 @@ async def makepost(posttitle, textcontent, attachedmedia, posttopic, username, s
                     cur.execute("SELECT MAX(id) FROM posts")
                     highest_id = cur.fetchone()[0] or 0
 
-                    # upload media to cock db
+                    # get timestamp
+                    uploadtimestamp = int(str(time.time()).split(".")[0])
+
+                    # upload to cock db
                     cur.execute(
                         "INSERT INTO posts (id, authorid, textcontent, attachedmedia, unixtimestamp, topic, posttitle) "
                         "VALUES (%s, %s, %s, %s, %s, %s, %s)",
                         ((highest_id + 1), userid, textcontent, attachedmedia,
-                         int(str(time.time()).split(".")[0]), posttopic, posttitle)
+                         uploadtimestamp, posttopic, posttitle)
                     )
                     conn.commit()
+
+                    # upload to meilisearch
+                    await IndexPost((highest_id + 1), userid, username, posttitle, textcontent, attachedmedia,
+                                    uploadtimestamp, posttopic)
 
                     return {
                         "detail": {
