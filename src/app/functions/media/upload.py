@@ -81,6 +81,8 @@ async def uploadMedia(file, username, sessionkey):
                         "detail": {
                             "APImessage": "success",
                             "UIMessage": "Media uploaded successfully.",
+                            "contentid": str(int(highest_id) + 1),
+                            "filename": file.filename,
                             "username": username,
                             "attempt_time": int(str(time.time()).split(".")[0]),
                         },
