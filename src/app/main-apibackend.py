@@ -1,15 +1,13 @@
 from fastapi import FastAPI
-from loguru import logger
+
+import uvicorn
 
 from routers import db
 from routers import users
 from routers import media
 from routers import posts
+from routers import search
 
-# init logging
-# logger.add("file_{time}.log", rotation="1GB", enqueue=True)  # makes log files
-logger.info("Logging initiated")
-logger.warning("Starting application")
 
 # init fastapi thingy
 app = FastAPI()
@@ -32,6 +30,11 @@ app.include_router(
 app.include_router(
     posts.router,
     tags=["posts"]
+)
+
+app.include_router(
+    search.router,
+    tags=["search"]
 )
 
 
