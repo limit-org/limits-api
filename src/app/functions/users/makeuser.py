@@ -21,19 +21,19 @@ async def makeUser(username, hashedpassword, email, ipaddress, task_start_time):
         if re.match(email_regex, email):
             # it DOES look like an email
             with conn.cursor() as cur:
-                # check if email is alr in use.
+                # check if email is already in use.
                 cur.execute(
                     "SELECT email FROM users WHERE email = %s",
                     (email,)
                 )
-                if cur.fetchone() is not None:  # if email alr exists in the db
+                if cur.fetchone() is not None:  # if email already exists in the db
                     time_task_took = time.time() - task_start_time
                     return HTTPException(
                         status_code=409,  # conflict http code
                         detail={
                             "error_code": "1",
                             "error": "Email already in use.",
-                            "UIMessage": "This email is already in use by another user.",
+                            "UIMessage": "This email is already in use.",
                             "time_took": time_task_took
                         }
                     )
