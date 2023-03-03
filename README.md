@@ -37,6 +37,7 @@ Written by Reiko (https://github.com/acreiko)
 
 ### Media/Documents
  - [ ] Allow users to upload media
+ - [ ] Send alt/description text with media
  - [ ] Allow users to upload documents
  - [ ] AI NSFW detection in images (Should we do?? plus, will it be accurate enough? maybe NSFWJS?)
 
