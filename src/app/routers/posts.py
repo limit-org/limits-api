@@ -39,6 +39,7 @@ async def createpost(username: str = Form(), sessionkey: str = Form(),
         "programming/python", "programming/js", "programming/rust", "programming/go", "programming/java", 
         "programming/gaming", "programming/other",  # programming (duh)
         "gaming/cheats", "gaming/other",  # gaming
+        "dev/testing"
     ]
     # ADD MORE
 
