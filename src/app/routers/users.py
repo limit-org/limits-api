@@ -27,7 +27,6 @@ async def createuser(request: Request, username: str = Form(), password: str = F
     # lowercase the username
     username = username.lower()
 
-    # check username/pwd length
     # check username
     if len(username) <= 2:  # equal to or less than 2 chars
         time_task_took = time.time() - time_task_started
@@ -50,27 +49,26 @@ async def createuser(request: Request, username: str = Form(), password: str = F
             }
         }
 
-    else:
-        # does password conform to standards?
-        pwc = CheckPassword(plainTextPass=password, username=username)
-        if pwc != 0:
-            time_task_took = time.time() - time_task_started
-            return {
-                "detail": {
-                    "error_code": "1",
-                    "error": str(pwc["err"]),
-                    "UIMessage": str(pwc["ui"]),
-                    "time_took": time_task_took
-                }
+    # does password conform to standards?
+    pwc = CheckPassword(plainTextPass=password, username=username)
+    if pwc != 0:
+        time_task_took = time.time() - time_task_started
+        return {
+            "detail": {
+                "error_code": "1",
+                "error": str(pwc["err"]),
+                "UIMessage": str(pwc["ui"]),
+                "time_took": time_task_took
             }
+        }
 
-        # Generate a salt for the password
-        salt = bcrypt.gensalt()
-        # Hash the password using the salt
-        hashed_password = str(bcrypt.hashpw(str(password).encode('utf-8'), salt)).replace("'", "\"")
+    # Generate a salt for the password
+    salt = bcrypt.gensalt()
+    # Hash the password using the salt
+    hashed_password = str(bcrypt.hashpw(str(password).encode('utf-8'), salt)).replace("'", "\"")
 
-        ipaddress = request.client.host
-        return await makeUser(username, hashed_password, email, ipaddress, time_task_started)
+    ipaddress = request.client.host
+    return await makeUser(username, hashed_password, email, ipaddress, time_task_started)
 
 
 @router.post('/users/login/', tags=["user"])
@@ -84,7 +82,7 @@ async def loginAsUser(request: Request, username: str = Form(), password: str = 
 
 
 # return "public-safe" user details. that is stuff like user id, username, email (if user chooses to share it)
-@router.get('/users/get/{username}', tags=["user"])
+@router.get('/users/get/{username}/', tags=["user"])
 async def getPublicUserDetails(username):
     return await getpublicuserinfo(username.lower())
 
