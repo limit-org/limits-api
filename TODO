@@ -1,9 +1,0 @@
-TODO List (In order of importance)
-
-[ ] Improve error logging
-[ ] Allow users to create text only posts
-[ ] Setup basic moderation features (Deleting posts, banning/warning users)
-[ ] Allow users to delete their own posts
-[ ] Make it so users can upload media to the server
-[ ] Make it so users can pull media from the server
-[ ] Remove EVERY print statement from API codebase
