@@ -7,6 +7,7 @@ from routers import users
 from routers import media
 from routers import posts
 from routers import search
+from routers import profilepic
 
 
 # init fastapi thingy
@@ -35,6 +36,11 @@ app.include_router(
 app.include_router(
     search.router,
     tags=["search"]
+)
+
+app.include_router(
+    profilepic.router,
+    tags=["profilepic"]
 )
 
 
