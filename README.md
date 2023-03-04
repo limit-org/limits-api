@@ -17,6 +17,7 @@ Written by Reiko (https://github.com/acreiko)
  - [ ] Adding an alias/name (Should we do??)
  - [ ] Currently online/offline
  - [ ] Custom status (???)
+ - [ ] Make it so users cant sign up from certain IP addresses. for e.g: common abuse ips (NOT TOR OR VPNS UNLESS THEY BECOME AN ISSUE.)
 
 ### Posts
  - [x] Send text only posts (see note #0)
