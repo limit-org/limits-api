@@ -20,7 +20,7 @@ async def upload_media(file: UploadFile = File(), username: str = Form(), sessio
     # all allowed media types. (media is considered audio, video and images)
     allowed_audio_types = ["audio/aac", "audio/mpeg", "audio/ogg", "audio/opus", "audio/wav", "audio/webm"]
     allowed_video_types = ["video/webm", "video/mp4", "video/quicktime", "video/ogg"]
-    # video/ogg is audio, but sometimes it's not????
+    # video/ogg is audio, but apparently it's not????
     allowed_image_types = ["image/jpeg", "image/png", "image/webp"]
     allowed_types = allowed_audio_types + allowed_video_types + allowed_image_types
 
