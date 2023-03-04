@@ -36,13 +36,10 @@ Written by Reiko (https://github.com/acreiko)
  - [ ] Block certain users from being able to upload media.
 
 ### Media/Documents
-<<<<<<< Updated upstream
- - [ ] Allow users to upload media
- - [ ] Send alt/description text with media
-=======
  - [x] Allow users to upload media
->>>>>>> Stashed changes
- - [ ] Allow users to upload documents
+ - [ ] Add media "sidecar" files. These store the information about some media like filename, size, pixels, who uploaded it, etc.
+ - [ ] Send alt/description text with media (stored in sidecar files.)
+ - [ ] Allow users to upload documents (What file formats should we support? .pdf,.docx is a must.)
  - [ ] AI NSFW detection in images (Should we do?? plus, will it be accurate enough? maybe NSFWJS?)
 
 ### To test
@@ -50,17 +47,17 @@ Written by Reiko (https://github.com/acreiko)
  - [ ] All/most cases of a user typing invalid parameters (Very important)
  
 ### Security
-- [ ] Secure hashing/salting/encryption algorithms for sensitive stored & transferred data (SHA-256 & AES-256)
-- [ ] User-supplied input field sanitization (XSS/SQLi)
-- [ ] User password minimums (at least 8 chars, 2 special chars, etc.)
-- [ ] User-uploaded document/media validation
+- [ ] Secure hashing/salting/encryption algorithms for sensitive stored & transferred data (SHA-256 & AES-256) (Need to test)
+- [ ] User-supplied input field sanitization (XSS/SQLi)                                                        (Need to test)
+- [x] User password minimums (at least 8 chars, 2 special chars, etc.)
+- [ ] User-uploaded document/media validation                                                                  (Requires more context)
 - [ ] Proper access controls for accounts/posts/admin pages
-- [ ] API whitelists for accessing urls/ports 
-- [ ] No weak/default passwords for admin accounts
-- [ ] No plain-text passwords in DB or source code
-- [ ] No sensitive system information in user-accesible pages (source, github, api, etc.)
+- [ ] API whitelists for accessing urls/ports                                                                  (Requires more context)
+- [ ] No weak/default passwords for admin accounts                                                             (To check/fix, ONLY AFTER TESTING PASSWORD HASHING SECURITY)
+- [ ] No plain-text passwords in DB or source code                                                             (To check)
+- [ ] No sensitive system information in user-accesible pages (source, github, api, etc.)                      (To check)
 - [ ] Use LIMIT or equivalent database controls to limit mass disclosure of records.
-- [ ] Use signatures to verify software/data integrity
+- [ ] Use signatures to verify software/data integrity                                                         (Requires more context)
 
 ### Notes
  - Note #0: media attachment works, but this is not verified if this method will stay the same, or if it even currently works.
