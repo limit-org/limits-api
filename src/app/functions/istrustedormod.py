@@ -10,14 +10,15 @@ def checkTORM(username):
             "SELECT (trusted, moderator) FROM users WHERE username = %s",
             (username,)
         )
-        TORMod = cur.fetchone()
-
-        print(TORMod)
-        if not TORMod[0] or TORMod[1]:  # if not trusted or a mod
+        TORMod = cur.fetchall()
+        if "t" not in [TORMod[0][0][1], TORMod[0][0][3]]:  # if not trusted or a mod
             return 1
 
         else:
-            if TORMod[0]:
-                return "trusted"
-            if TORMod[1]:
-                return "moderator"
+            if "t" in [TORMod[0][0][1], TORMod[0][0][3]]:
+                return "mod+trusted"
+            else:
+                if "t" in TORMod[0][0][1]:
+                    return "trusted"
+                if "t" in TORMod[0][0][3]:
+                    return "moderator"
