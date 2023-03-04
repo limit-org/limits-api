@@ -1,10 +1,6 @@
 from fastapi import APIRouter
-from fastapi import Form
-from pydantic import BaseModel
 
 from functions.meilisearch.search import MSSearchPosts
-from functions.dbconfig import config
-
 
 router = APIRouter()
 

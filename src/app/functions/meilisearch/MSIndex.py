@@ -1,7 +1,4 @@
-import random
-
 import meilisearch
-import json
 
 from ..dbconfig import meilisearchConfig
 

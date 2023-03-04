@@ -3,9 +3,7 @@ import time
 from fastapi import APIRouter
 from fastapi import Form
 from pydantic import BaseModel
-import psycopg2
 
-from functions.dbconfig import config
 from functions.posting.create import makepost
 
 
