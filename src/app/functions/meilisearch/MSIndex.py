@@ -22,3 +22,25 @@ async def IndexPost(postid: int, authorid: int, authorusername: str, title: str,
         'id'  # primary key for MS posts.
         # this is so MS can understand how many posts there are and how to identify one from another.
     )
+
+
+async def IndexUser(userid, username, unixtimejoined, bio, modnotes, trusted, mod, awards, official):
+    msdb = meilisearchConfig()[0]
+    msdbkey = meilisearchConfig()[1]
+    client = meilisearch.Client(msdb, msdbkey)
+
+    client.index('users').add_documents([{
+        'id': int(userid),  # a meilisearch user id is
+        'username': str(username),
+        'profile_picture_url': ("/profilepic/"+str(userid)),
+        'unixtime_joined': unixtimejoined,
+        'bio': bio,
+        'modnotes': modnotes,
+        'is_trusted': trusted,
+        'is_moderator': mod,
+        'awards': awards,
+        'is_official': official
+    }],
+        'id'  # primary key for MS users.
+        # this is so MS can understand how many users there are and how to identify one from another.
+    )
