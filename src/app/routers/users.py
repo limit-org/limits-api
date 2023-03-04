@@ -8,6 +8,7 @@ from functions.users.getpublicuserdetails import getpublicuserinfo
 from functions.users.login import login
 from functions.users.logout import logout
 from functions.users.changepassword import changepwd
+from functions.users.update import updateUser
 from functions.passwordstandards import CheckPassword
 
 router = APIRouter()
@@ -98,3 +99,9 @@ async def changepassword(request: Request, username: str = Form(), password: str
     client_host = request.client.host
     user_agent = Header(default=None)
     return await changepwd(username, password, newpass, client_host, user_agent)
+
+
+@router.put('/users/updateprofile/', tags=["user"])
+async def updateprofile(username: str = Form(), usersessionkey:str = Form(), newusername:str = Form(),
+                        newbio:str = Form(), emailispublic:str = Form()):
+    return await updateUser(username, usersessionkey, newusername, newbio, emailispublic)
