@@ -60,7 +60,7 @@ Written by Reiko (https://github.com/acreiko)
 - [ ] No sensitive system information in user-accesible pages (source, github, api, etc.)                      (To check)
 - [ ] Use LIMIT or equivalent database controls to limit mass disclosure of records.
 - [ ] Use signatures to verify software/data integrity                                                         (Requires more context)
-- [ ] Users can add some sort of 2FA authentication.
+- [ ] Users can add some sort of 2FA authentication.                                                           (How to implement??)
 
 ### Notes
  - Note #0: media attachment works, but this is not verified if this method will stay the same, or if it even currently works.
