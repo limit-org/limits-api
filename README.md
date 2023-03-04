@@ -11,10 +11,11 @@ Written by Reiko (https://github.com/acreiko)
  - [ ] User creation without an email address
  - [x] Logging in
  - [x] Logging out
- - [ ] Modifying personal details (to add + what PD's should we add?)
+ - [ ] Modifying personal details
+ - [ ] Modifying email
  - [x] Changing password
  - [ ] Adding a profile picture
- - [ ] Adding an alias/name (Should we do??)
+ - [ ] Adding an alias/name
  - [ ] Currently online/offline
  - [ ] Custom status (???)
  - [ ] Make it so users cant sign up from certain IP addresses. for e.g: common abuse ips (NOT TOR OR VPNS UNLESS THEY BECOME AN ISSUE.)
