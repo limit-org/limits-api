@@ -1,3 +1,4 @@
+import csv
 import time
 import psycopg2
 from fastapi import HTTPException
@@ -5,9 +6,10 @@ import traceback
 
 from ..dbconfig import config
 from ..log import logErrorToDB
+from ..meilisearch.MSIndex import IndexUser
 
 
-async def updateUser(username, usersessionkey, newusername, newbio, emailispublic):
+async def updateUser(username, usersessionkey, newusername, newbio, emailispublic, newalias):
     # start timer
     task_start_time = time.time()
 
@@ -43,13 +45,20 @@ async def updateUser(username, usersessionkey, newusername, newbio, emailispubli
                 if newusername in [username, "null"]:  # if username hasn't been updated, don't update
                     newusername = username
 
+                if newalias == "null":
+                    cur.execute(
+                        "SELECT alias FROM users WHERE username=%s",
+                        (username,)
+                    )
+                    newalias = cur.fetchone()
+
                 if newbio == "null":  # use null if the bio isn't being updated.
                     cur.execute(
                         "SELECT bio FROM users WHERE username=%s",
                         (username,)
                     )
                     newbio = cur.fetchone()
-                if newbio == "none":  # Use none to get rid of a bio
+                if newbio == "none":  # Use none to get rid of the bio
                     newbio = ""
 
                 if emailispublic not in ["t", "f"]:
@@ -75,10 +84,36 @@ async def updateUser(username, usersessionkey, newusername, newbio, emailispubli
                 if usersessionkey == sessionCookie:  # it's correct, change users stuff
                     # newusername, newbio, emailispublic
                     cur.execute(  # modify the lastaccountlogin field to now.
-                        "UPDATE users SET username=%s, bio=%s, makeemailpublic=%s WHERE username=%s",
-                        (newusername, newbio, emailispublic, username)
+                        "UPDATE users SET username=%s, alias=%s, bio=%s, makeemailpublic=%s WHERE username=%s",
+                        (newusername, newalias, newbio, emailispublic, username)
                     )
                     conn.commit()
+
+                    cur.execute(
+                        "SELECT (userid, username, alias, unixtimejoined, bio, modnotes, trusted, moderator, awards, "
+                        "email, makeemailpublic, official) "
+                        "FROM users WHERE username = %s",
+                        (username,)
+                    )
+                    DBValue = cur.fetchone()
+                    # Parse the string using the csv module
+                    reader = csv.reader(DBValue, delimiter=',', quotechar='"')
+                    # Extract the fields and convert them to a list
+                    fields = list(reader)[0]
+                    # Extract the individual values from the list
+                    user_id, username, alias, unixjoin, bio, modnotes, is_trusted, is_mod, awards, email, is_email_public, \
+                        is_official = fields
+
+                    # Remove the parentheses from the first and last values
+                    user_id = user_id[1:]
+                    is_official = is_official[:-1]
+
+                    if is_email_public == "f":
+                        email = "*******@provider.tld"
+
+                    await IndexUser(user_id, username, alias, unixjoin, bio, modnotes, is_trusted, is_mod,
+                                    awards, is_official)
+
                     time_task_took = time.time() - task_start_time
                     return {
                         "detail": {
@@ -86,7 +121,8 @@ async def updateUser(username, usersessionkey, newusername, newbio, emailispubli
                             "UIMessage": "Successfully modified your profile!",
                             "username": newusername,
                             "bio": newbio,
-                            "publicemail": emailispublic
+                            "publicemail": emailispublic,
+                            "alias": newalias
                         },
                         "time_took": time_task_took,
                         "error_code": 0

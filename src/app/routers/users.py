@@ -102,6 +102,6 @@ async def changepassword(request: Request, username: str = Form(), password: str
 
 
 @router.put('/users/updateprofile/', tags=["user"])
-async def updateprofile(username: str = Form(), usersessionkey:str = Form(), newusername:str = Form(),
-                        newbio:str = Form(), emailispublic:str = Form()):
-    return await updateUser(username, usersessionkey, newusername, newbio, emailispublic)
+async def updateprofile(username: str = Form(), usersessionkey: str = Form(), newusername: str = Form(),
+                        newbio: str = Form(), emailispublic: str = Form(), newalias: str = Form()):
+    return await updateUser(username, usersessionkey, newusername, newbio, emailispublic, newalias)
