@@ -73,7 +73,7 @@ async def makeUser(username, hashedpassword, email, ipaddress, task_start_time):
 
                 # let meilisearch index the user. most values are configured later though like if they're a mod,
                 # their bio, etc.
-                await IndexUser(userid, username, usertimestamp, "", "", False, False, "", False)
+                await IndexUser(userid, username, "", usertimestamp, "", "", False, False, "", False)
 
                 # calculate time taken to do the thing
                 time_task_took = time.time() - task_start_time
