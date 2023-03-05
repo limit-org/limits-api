@@ -24,15 +24,15 @@ async def IndexPost(postid: int, authorid: int, authorusername: str, title: str,
     )
 
 
-async def IndexUser(userid, username, unixtimejoined, bio, modnotes, trusted, mod, awards, official):
+async def IndexUser(userid, username, alias, unixtimejoined, bio, modnotes, trusted, mod, awards, official):
     msdb = meilisearchConfig()[0]
     msdbkey = meilisearchConfig()[1]
     client = meilisearch.Client(msdb, msdbkey)
 
-    client.index('users').add_documents([{
+    client.index('users').update_documents([{
         'id': int(userid),  # a meilisearch user id is
         'username': str(username),
-        'profile_picture_url': ("/profilepic/"+str(userid)),
+        'alias': str(alias),
         'unixtime_joined': unixtimejoined,
         'bio': bio,
         'modnotes': modnotes,
