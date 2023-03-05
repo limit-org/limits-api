@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from functions.meilisearch.search import MSSearchPosts
-from functions.meilisearch.search import MSSearchUsers
+from functions.meilisearch.MSSearch import MSSearchPosts
+from functions.meilisearch.MSSearch import MSSearchUsers
 
 router = APIRouter()
 

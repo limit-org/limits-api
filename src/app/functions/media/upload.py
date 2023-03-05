@@ -2,11 +2,12 @@ import psycopg2
 from ..dbconfig import config
 import time
 import base64
-from functions.log import logErrorToDB
+from ..log import logErrorToDB
 from fastapi import HTTPException
 import traceback
 
 
+# func for uploading media to limits
 async def uploadMedia(file, username, sessionkey):
     # start timer
     task_start_time = time.time()
@@ -21,7 +22,7 @@ async def uploadMedia(file, username, sessionkey):
             )
             sessioncookie = cur.fetchone()
 
-            if sessioncookie is None:
+            if sessioncookie is None:  # if the user doesn't exist or never logged in
                 time_task_took = time.time() - task_start_time
                 return {
                     "detail": {

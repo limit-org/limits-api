@@ -3,7 +3,7 @@ from pydantic import BaseModel
 import time
 
 from functions.media.upload import uploadMedia
-from functions.media.servemedia import servemedia
+from functions.media.serve import servemedia
 
 router = APIRouter()
 

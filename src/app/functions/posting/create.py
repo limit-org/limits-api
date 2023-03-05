@@ -5,7 +5,7 @@ from functions.log import logErrorToDB
 from fastapi import HTTPException
 import traceback
 from ..istrustedormod import checkTORM
-from functions.meilisearch.MSIndex import IndexPost
+from ..meilisearch.MSIndex import IndexPost
 
 
 async def makepost(posttitle, textcontent, attachedmedia, posttopic, username, sessionkey):
