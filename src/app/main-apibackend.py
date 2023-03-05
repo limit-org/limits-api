@@ -1,7 +1,5 @@
 from fastapi import FastAPI
 
-import uvicorn
-
 from routers import db
 from routers import users
 from routers import media
