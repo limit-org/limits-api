@@ -14,19 +14,19 @@ Written by Reiko (https://github.com/acreiko)
  - [x] Modifying personal details
  - [ ] Modifying email
  - [x] Changing password
- - [ ] Adding a profile picture
- - [ ] Adding an alias/name
+ - [x] Adding a profile picture
+ - [x] Adding an alias/name
  - [ ] Currently online/offline
  - [ ] Custom status (should we do??)
- - [ ] Make it so users cant sign up from certain IP addresses. for e.g: common abuse ips or banned users. (NOT TOR OR VPNS UNLESS THEY BECOME AN ISSUE.)
+ - [ ] Make it so users cant sign up from certain IP addresses. for e.g: common abuse ips (NOT TOR OR VPNS UNLESS THEY BECOME AN ISSUE.)
 
 ### Posts
  - [x] Send text only posts (see note #0)
- - [x] Send text posts with media (see note #1)
+ - [x] Send text posts with media (see note #0)
  
 ### Site Usability
- - [ ] Add search cababilities using Meilisearch
- - [ ] Create topics for users to post to (They work like e.g: "hacking/osint", "networking/LAN", etc..) (see note #1)
+ - [ ] Add search capabilities using Meilisearch (see note #2)
+ - [ ] Add topics for users to post to (They work like e.g: "hacking/osint", "networking/LAN", etc..) (see note #1)
 
 ### Moderation
  - [ ] Banned domains/links database
@@ -64,4 +64,5 @@ Written by Reiko (https://github.com/acreiko)
 
 ### Notes
  - Note #0: media attachment works, but this is not verified if this method will stay the same, or if it even currently works.
- - Note #1: mostly done, a lot of topics exist and they need to be imported into CrDB with descriptions, how many posts there are in them, etc.
+ - Note #1: mostly done, a lot of topics exist, and they need to be imported into CrDB with descriptions, how many posts there are in them, etc.
+ - Note #2: done, indexing and searching users and posts works, but may need to add more search capabilities in the future.
