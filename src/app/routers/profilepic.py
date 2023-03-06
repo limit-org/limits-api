@@ -15,15 +15,15 @@ class profilepic(BaseModel):
 
 
 @router.get('/profilepic/get/{username}', tags=["profilepic"])
-async def serveprofilepic(size: int, username: str):
-    return await servepfp(username, size)
+async def serveprofilepic(size: int, username):
+    return await servepfp(str(username), size)
 
 
 @router.post('/profilepic/set/', tags=["profilepic"])
 async def setprofilepic(file: UploadFile = File(), username: str = Form(), sessionkey: str = Form()):
     time_task_started = time.time()
 
-    # check if it's an image file
+    # check if it's an allowed image type
     allowed_image_types = ["image/jpeg", "image/png", "image/webp"]
     if file.content_type in allowed_image_types:
         return await setpfp(file, username, sessionkey)
