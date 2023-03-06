@@ -9,7 +9,7 @@ async def IndexPost(postid: int, authorid: int, authorusername: str, title: str,
     msdbkey = meilisearchConfig()[1]
     client = meilisearch.Client(msdb, msdbkey)
 
-    client.index('posts').add_documents([{
+    client.index('posts').update_documents([{
         'id': int(postid),
         'authorid': str(authorid),
         'author': authorusername,
