@@ -16,7 +16,7 @@ async def servemedia(contentid):
 
         with conn.cursor() as cur:
             cur.execute(
-                "SELECT (base64, deleted, reasonfordeletion) FROM media WHERE contentid = %s",
+                "SELECT (base64, deleted, reasonfordeletion, contenttype) FROM media WHERE contentid = %s",
                 (contentid,)
             )
             media = cur.fetchone()
@@ -41,6 +41,7 @@ async def servemedia(contentid):
                 media64 = values[0]
                 deleted = values[1]
                 deletereason = values[2]
+                contenttype = values[3]
 
                 if deleted == "t":  # if it exists/ed but is now deleted
                     time_task_took = time.time() - task_start_time
@@ -56,17 +57,12 @@ async def servemedia(contentid):
                         "error_code": 0
                     }
 
-                # not needed for me, might be for others, so we will leave this here.
-                # # get content type
-                # bytesData = io.BytesIO()
-                # bytesData.write(base64.b64decode(media64))
-                # bytesData.seek(0)  # Jump to the beginning of the file-like interface to read all content!
-
                 # de base64 media
                 media64 = base64.b64decode(media64)
 
                 # Return the data
-                response = Response(content=media64)  # , media_type=mediatype)
+                # return the media bytes and the content type. so browsers know it's a png, ogg, etc.
+                response = Response(content=media64, media_type=contenttype)
                 return response
 
     except (Exception, psycopg2.DatabaseError):

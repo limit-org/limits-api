@@ -72,9 +72,10 @@ async def uploadMedia(file, username, sessionkey):
 
                     # upload media to cock db
                     cur.execute(
-                        "INSERT INTO media (base64, userid, unixtimestamp, deleted, filename, contentid) "
+                        "INSERT INTO media (base64, userid, unixtimestamp, deleted, filename, contentid, contenttype) "
                         "VALUES (%s, %s, %s, %s, %s, %s)",
-                        (mediabase64, userid, time.time(), "false", file.filename, (int(highest_id) + 1))
+                        (mediabase64, userid, time.time(), "false", file.filename, (int(highest_id) + 1),
+                         str(file.content_type))
                     )
                     conn.commit()
 
