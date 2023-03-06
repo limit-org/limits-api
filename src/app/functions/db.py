@@ -19,7 +19,6 @@ async def returnVersion():
         with conn.cursor() as cur:
             cur.execute("SELECT version()")  # execute this command in the database
             db_version = cur.fetchall()
-            conn.commit()
 
         # calculate time taken to do the thing
         time_task_took = time.time() - task_start_time
