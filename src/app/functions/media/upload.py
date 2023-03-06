@@ -56,6 +56,20 @@ async def uploadMedia(file, username, sessionkey):
                 if sessioncookie[0] == sessionkey:  # correct sesh key
                     time_task_took = time.time() - task_start_time
 
+                    # check the file size.
+                    fc = await file.read()
+                    if len(fc) > 10485760:  # if greater than exactly 10 MB
+                        time_task_took = time.time() - task_start_time
+                        return HTTPException(
+                            status_code=400,  # bad request
+                            detail={
+                                "error_code": "1",
+                                "error": "File too large.",
+                                "UIMessage": "That picture is too large. Media can only be 10MB or less.",
+                                "time_took": time_task_took
+                            }
+                        )
+
                     # base64 media
                     mediabase64 = base64.b64encode(await file.read()).decode("utf-8")
 
