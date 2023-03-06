@@ -42,6 +42,6 @@ app.include_router(
 )
 
 
-@app.get("/", tags=["index"])
-async def index_show_paths():
-    return "index."
+@app.get("/heartbeat", tags=["index"])
+async def heartbeat():
+    return "API Online"
