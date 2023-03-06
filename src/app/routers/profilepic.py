@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 from functions.profilepic.serve import servepfp
 from functions.profilepic.set import setpfp
+from functions.profilepic.set import removepfp
 
 router = APIRouter()
 
@@ -39,3 +40,8 @@ async def setprofilepic(file: UploadFile = File(), username: str = Form(), sessi
                 "time_took": time_task_took
             }
         )
+
+
+@router.post('/profilepic/remove/', tags=["profilepic"])
+async def removeprofilepic(username: str = Form(), sessionkey: str = Form()):
+    return await removepfp(username, sessionkey)
