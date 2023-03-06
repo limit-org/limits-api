@@ -131,8 +131,7 @@ async def setpfp(file, username, sessionkey):
                         }
 
                     if pfp[0] == userid:  # if pfp already exists
-                        # upload media to cock db x2
-                        # "UPDATE users SET username=%s, bio=%s, makeemailpublic=%s WHERE username=%s",
+                        # upload media to db
                         cur.execute(
                             "UPDATE profilepics SET base64=%s, unixtimestamp=%s "
                             "WHERE userid=%s",
