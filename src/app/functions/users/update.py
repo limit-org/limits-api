@@ -90,7 +90,7 @@ async def updateUser(username, usersessionkey, newusername, newbio, emailispubli
                     conn.commit()
 
                     cur.execute(
-                        "SELECT (userid, username, alias, unixtimejoined, bio, modnotes, trusted, moderator, awards, "
+                        "SELECT (userid, username, alias, unixtimejoined, bio, modnotes, trusted, moderator, badges, "
                         "email, makeemailpublic, official) "
                         "FROM users WHERE username = %s",
                         (username,)
@@ -101,7 +101,7 @@ async def updateUser(username, usersessionkey, newusername, newbio, emailispubli
                     # Extract the fields and convert them to a list
                     fields = list(reader)[0]
                     # Extract the individual values from the list
-                    user_id, username, alias, unixjoin, bio, modnotes, is_trusted, is_mod, awards, email, is_email_public, \
+                    user_id, username, alias, unixjoin, bio, modnotes, is_trusted, is_mod, badges, email, is_email_public, \
                         is_official = fields
 
                     # Remove the parentheses from the first and last values
@@ -112,7 +112,7 @@ async def updateUser(username, usersessionkey, newusername, newbio, emailispubli
                         email = "*******@provider.tld"
 
                     await IndexUser(user_id, username, alias, unixjoin, bio, modnotes, is_trusted, is_mod,
-                                    awards, is_official)
+                                    badges, is_official)
 
                     time_task_took = time.time() - task_start_time
                     return {

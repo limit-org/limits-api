@@ -17,7 +17,7 @@ async def getpublicuserinfo(username):
         with conn.cursor() as cur:
             # check if username already exists
             cur.execute(
-                "SELECT (userid, username, alias, unixtimejoined, bio, modnotes, trusted, moderator, awards, "
+                "SELECT (userid, username, alias, unixtimejoined, bio, modnotes, trusted, moderator, badges, "
                 "email, makeemailpublic, official) "
                 "FROM users WHERE username = %s",
                 (username,)
@@ -33,7 +33,7 @@ async def getpublicuserinfo(username):
                 # Extract the fields and convert them to a list
                 fields = list(reader)[0]
                 # Extract the individual values from the list
-                user_id, username, alias, unixjoin, bio, modnotes, is_trusted, is_mod, awards, email, is_email_public, \
+                user_id, username, alias, unixjoin, bio, modnotes, is_trusted, is_mod, badges, email, is_email_public, \
                     is_official = fields
 
                 # Remove the parentheses from the first and last values
@@ -54,7 +54,7 @@ async def getpublicuserinfo(username):
                             "is_trusted": is_trusted,
                             "moderation_notes": modnotes,
                             "is_mod": is_mod,
-                            "awards": awards,
+                            "badges": badges,
                             "email": email,
                             "is_email_public": is_email_public,
                             "official": is_official
