@@ -15,7 +15,7 @@ Written by Reiko (https://github.com/acreiko)
  - [ ] Modifying email
  - [x] Changing password
  - [x] Adding a profile picture
- - [ ] Remove a profile picture
+ - [x] Remove a profile picture
  - [x] Adding an alias/name
  - [ ] Currently online/offline
  - [ ] Custom status (should we do??)
@@ -42,7 +42,7 @@ Written by Reiko (https://github.com/acreiko)
  - [x] Allow users to upload media
  - [ ] Add media "sidecar" files. These store the information about some media like filename, size, pixels, who uploaded it, duration (if audio or video), etc.
  - [ ] Send alt/description text with media (stored in sidecar files.)
- - [ ] Enforce a media size limit.
+ - [x] Enforce a media size limit.
  - [ ] Allow users to upload documents (What file formats should we support? .pdf,.docx is a must.)
  - [ ] AI NSFW detection in images (Should we do?? plus, will it be accurate enough? maybe NSFWJS?)
 
