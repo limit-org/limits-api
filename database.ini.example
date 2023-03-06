@@ -1,5 +1,5 @@
 [db]
-DATABASE_URL="postgresql://{username}:{password}@{cockroachdb url}:{cockroachdb port}/{database name}?sslmode=verify-full"
+DATABASE_URL={cockroachDBURL}
 [ms]
-MEILISEARCH_URL={meilisearch url}
-MEILISEARCH_KEY={meilisearch api/master key}
+MEILISEARCH_URL={meilisearchURL}
+MEILISEARCH_KEY={meilisearchKey}
