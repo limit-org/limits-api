@@ -42,6 +42,6 @@ async def setprofilepic(file: UploadFile = File(), username: str = Form(), sessi
         )
 
 
-@router.post('/profilepic/remove/', tags=["profilepic"])
+@router.delete('/profilepic/remove/', tags=["profilepic"])
 async def removeprofilepic(username: str = Form(), sessionkey: str = Form()):
     return await removepfp(username, sessionkey)
