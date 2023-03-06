@@ -15,12 +15,12 @@ class profilepic(BaseModel):
     sessionkey: str
 
 
-@router.get('/profilepic/get/{username}', tags=["profilepic"])
+@router.get('/profilepic/get/{username}', tags=["profilepic"], status_code=200)
 async def serveprofilepic(size: int, username):
     return await servepfp(str(username), size)
 
 
-@router.post('/profilepic/set/', tags=["profilepic"])
+@router.post('/profilepic/set/', tags=["profilepic"], status_code=201)
 async def setprofilepic(file: UploadFile = File(), username: str = Form(), sessionkey: str = Form()):
     time_task_started = time.time()
 
@@ -32,7 +32,7 @@ async def setprofilepic(file: UploadFile = File(), username: str = Form(), sessi
     else:
         time_task_took = time.time() - time_task_started
         return HTTPException(
-            status_code=500,
+            status_code=415,  # Unsupported Media Type
             detail={
                 "error_code": "1",
                 "error": "Invalid media format.",
@@ -42,6 +42,6 @@ async def setprofilepic(file: UploadFile = File(), username: str = Form(), sessi
         )
 
 
-@router.delete('/profilepic/remove/', tags=["profilepic"])
+@router.delete('/profilepic/remove/', tags=["profilepic"], status_code=200)
 async def removeprofilepic(username: str = Form(), sessionkey: str = Form()):
     return await removepfp(username, sessionkey)

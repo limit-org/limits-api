@@ -21,7 +21,7 @@ class User(BaseModel):
     sessionkey: str
 
 
-@router.post('/users/create/', tags=["user"])
+@router.post('/users/create/', tags=["user"], status_code=201)
 async def createuser(request: Request, username: str = Form(), password: str = Form(), email: str = Form()):
     time_task_started = time.time()
 
@@ -72,7 +72,7 @@ async def createuser(request: Request, username: str = Form(), password: str = F
     return await makeUser(username, hashed_password, email, ipaddress, time_task_started)
 
 
-@router.post('/users/login/', tags=["user"])
+@router.post('/users/login/', tags=["user"], status_code=200)
 async def loginAsUser(request: Request, username: str = Form(), password: str = Form()):
     # lowercase the username
     username = username.lower()
@@ -83,25 +83,25 @@ async def loginAsUser(request: Request, username: str = Form(), password: str = 
 
 
 # return "public-safe" user details. that is stuff like user id, username, email (if user chooses to share it)
-@router.get('/users/get/{username}/', tags=["user"])
+@router.get('/users/get/{username}/', tags=["user"], status_code=200)
 async def getPublicUserDetails(username):
     return await getpublicuserinfo(username.lower())
 
 
 # let the user logout. (delete their session token)
-@router.post('/users/logout/', tags=["user"])
+@router.post('/users/logout/', tags=["user"], status_code=200)
 async def logoutAsUser(username: str = Form(), sessionkey: str = Form()):
     return await logout(username, sessionkey)
 
 
-@router.put('/users/resetpassword/', tags=["user"])
+@router.put('/users/resetpassword/', tags=["user"], status_code=200)
 async def changepassword(request: Request, username: str = Form(), password: str = Form(), newpass: str = Form()):
     client_host = request.client.host
     user_agent = Header(default=None)
     return await changepwd(username, password, newpass, client_host, user_agent)
 
 
-@router.put('/users/updateprofile/', tags=["user"])
+@router.put('/users/updateprofile/', tags=["user"], status_code=200)
 async def updateprofile(username: str = Form(), usersessionkey: str = Form(), newusername: str = Form(),
                         newbio: str = Form(), emailispublic: str = Form(), newalias: str = Form()):
     return await updateUser(username, usersessionkey, newusername, newbio, emailispublic, newalias)

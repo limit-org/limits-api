@@ -19,7 +19,7 @@ class Post(BaseModel):
 router = APIRouter()
 
 
-@router.post('/posts/create', tags=["posts"])
+@router.post('/posts/create', tags=["posts"], status_code=201)
 async def createpost(username: str = Form(), sessionkey: str = Form(),
                      posttitle: str = Form(), postcontent: str = Form(), attachedmedia: str = Form(),
                      posttopic: str = Form()):

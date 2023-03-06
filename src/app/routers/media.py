@@ -13,7 +13,7 @@ class Media(BaseModel):
     sessionkey: str
 
 
-@router.post("/media/upload", tags=["media"])
+@router.post("/media/upload", tags=["media"], status_code=201)
 async def upload_media(file: UploadFile = File(), username: str = Form(), sessionkey: str = Form()):
     time_task_started = time.time()
 
@@ -29,7 +29,7 @@ async def upload_media(file: UploadFile = File(), username: str = Form(), sessio
     else:
         time_task_took = time.time() - time_task_started
         return HTTPException(
-            status_code=500,  # conflict http code
+            status_code=415,  # Unsupported Media Type
             detail={
                 "error_code": "1",
                 "error": "Invalid media format.",
@@ -39,6 +39,6 @@ async def upload_media(file: UploadFile = File(), username: str = Form(), sessio
         )
 
 
-@router.get("/media/get/{contentid}", tags=["media"])
+@router.get("/media/get/{contentid}", tags=["media"], status_code=200)
 async def serve_media(contentid: int):
     return await servemedia(contentid)
