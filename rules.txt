@@ -15,8 +15,8 @@ Moderation:
  - When mod A is waiting for an agreement from mod B, mod A may temporarily block a user from posting, commenting, and uploading media.
  - ANY RULE CAN BE USED AT MOD DISCRETION, HOWEVER THIS REQUIRES AT LEAST ONE OTHER MOD TO AGREE TO. If users would like to change a rule, a poll will be held.
  - When a user posts anything with a link in it, action will be taken depending on if the link is banned/watched. Some links will warn and block it, others will mute for further consideration and the worst of the worst links will instantly ban users.
- 
- 
+
+
 Content Posting:
  Allowed content. Content that is:
   - Relevant (to the site or topic)
@@ -36,7 +36,7 @@ Content Posting:
   - Any sexual depiction of minors or animals (other than humans)
   - Any glorification of Zoophilia/Pedophilia
   - Gore
-  - Content that is very disturbing in nature
+  - Any content that is very disturbing in nature
   - Glorifies or promotes swatting
 
 
