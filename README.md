@@ -15,6 +15,7 @@ Written by Reiko (https://github.com/acreiko)
  - [ ] Modifying email
  - [x] Changing password
  - [x] Adding a profile picture
+ - [ ] Remove a profile picture
  - [x] Adding an alias/name
  - [ ] Currently online/offline
  - [ ] Custom status (should we do??)
@@ -25,7 +26,7 @@ Written by Reiko (https://github.com/acreiko)
  - [x] Send text posts with media (see note #0)
  
 ### Site Usability
- - [ ] Add search capabilities using Meilisearch (see note #2)
+ - [x] Add search capabilities using Meilisearch (see note #2)
  - [ ] Add topics for users to post to (They work like e.g: "hacking/osint", "networking/LAN", etc..) (see note #1)
 
 ### Moderation
@@ -39,8 +40,9 @@ Written by Reiko (https://github.com/acreiko)
 
 ### Media/Documents
  - [x] Allow users to upload media
- - [ ] Add media "sidecar" files. These store the information about some media like filename, size, pixels, who uploaded it, etc.
+ - [ ] Add media "sidecar" files. These store the information about some media like filename, size, pixels, who uploaded it, duration (if audio or video), etc.
  - [ ] Send alt/description text with media (stored in sidecar files.)
+ - [ ] Enforce a media size limit.
  - [ ] Allow users to upload documents (What file formats should we support? .pdf,.docx is a must.)
  - [ ] AI NSFW detection in images (Should we do?? plus, will it be accurate enough? maybe NSFWJS?)
 
@@ -57,7 +59,7 @@ Written by Reiko (https://github.com/acreiko)
 - [ ] API whitelists for accessing urls/ports                                                                  (Requires more context)
 - [ ] No weak/default passwords for admin accounts                                                             (To check/fix, ONLY AFTER TESTING PASSWORD HASHING SECURITY)
 - [ ] No plain-text passwords in DB or source code                                                             (To check)
-- [ ] No sensitive system information in user-accesible pages (source, github, api, etc.)                      (To check)
+- [ ] No sensitive system information in user-accessible pages (source, github, api, etc.)                      (To check)
 - [ ] Use LIMIT or equivalent database controls to limit mass disclosure of records.
 - [ ] Use signatures to verify software/data integrity                                                         (Requires more context)
 - [ ] Users can add some sort of 2FA authentication.                                                           (How to implement??)
