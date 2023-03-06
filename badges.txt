@@ -1,0 +1,6 @@
+badge id: use case: comments
+1: owner: give only to limits owner
+2: head admin
+3: administrator
+4: moderator
+5: alpha/beta tester
