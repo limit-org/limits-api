@@ -1,5 +1,5 @@
 fastapi[all]~=0.92.0
-psycopg-binary
+psycopg2-binary
 bcrypt~=4.0.1
 pydantic~=1.10.5
 meilisearch~=0.25.0
