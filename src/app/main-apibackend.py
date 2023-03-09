@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 
 from routers import db
 from routers import users
@@ -42,6 +43,11 @@ app.include_router(
 )
 
 
-@app.get("/heartbeat", tags=["index"])
+@app.get("/", tags=["index"])
+async def index() -> RedirectResponse:
+    return RedirectResponse(url="/heartbeat")
+
+
+@app.get("/heartbeat", tags=["heartbeat"])
 async def heartbeat():
     return "API Online"
