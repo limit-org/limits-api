@@ -101,7 +101,7 @@ async def servepfp(username, size):
                     # base64 media
                     buffered = io.BytesIO()
                     im_thumb.save(buffered, format="PNG")
-                    response = Response(content=buffered.getvalue())
+                    response = Response(content=buffered.getvalue(), media_type="image/png")
                     return response
 
     except (Exception, psycopg2.DatabaseError):
