@@ -91,7 +91,7 @@ async def servepfp(username, size):
 
                 if size == 512:
                     # Return the data without doing anything cus all pfps are already 512x512
-                    response = Response(content=media64)  # , media_type=mediatype)
+                    response = Response(content=media64, media_type="image/png")
                     return response
                 else:
                     # make smaller lmao
