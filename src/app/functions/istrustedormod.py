@@ -15,7 +15,7 @@ def checkTORM(username):
             return 1
 
         else:
-            if "t" in [TORMod[0][0][1], TORMod[0][0][3]]:
+            if TORMod[0][0][1] == "t" and TORMod[0][0][3] == "t":
                 return "mod+trusted"
             else:
                 if "t" in TORMod[0][0][1]:
