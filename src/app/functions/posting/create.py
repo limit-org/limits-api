@@ -103,12 +103,13 @@ async def makepost(posttitle, textcontent, attachedmedia, posttopic, username, s
 
                     # upload to meilisearch
                     await IndexPost((highest_id + 1), userid, username, posttitle, textcontent, attachedmedia,
-                                    uploadtimestamp, posttopic)
+                                    uploadtimestamp, posttopic, edited=False)
 
                     return {
                         "detail": {
                             "APImessage": "success",
                             "UIMessage": "Post uploaded!",
+                            "postid": (highest_id + 1),
                             "username": username,
                             "attempt_time": int(str(time.time()).split(".")[0]),
                         },

@@ -4,7 +4,7 @@ from ..dbconfig import meilisearchConfig
 
 
 async def IndexPost(postid: int, authorid: int, authorusername: str, title: str, textcontent: str,
-                    media: str, timestamp: int, topic: str):
+                    media: str, timestamp: int, topic: str, edited: bool):
     msdb = meilisearchConfig()[0]
     msdbkey = meilisearchConfig()[1]
     client = meilisearch.Client(msdb, msdbkey)
@@ -17,7 +17,8 @@ async def IndexPost(postid: int, authorid: int, authorusername: str, title: str,
         'content': textcontent,
         'media': media,
         'timestamp': str(timestamp),
-        'topic': topic
+        'topic': topic,
+        'edited': edited
     }],
         'id'  # primary key for MS posts.
         # this is so MS can understand how many posts there are and how to identify one from another.
