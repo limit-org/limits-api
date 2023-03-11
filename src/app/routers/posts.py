@@ -21,7 +21,7 @@ router = APIRouter()
 
 
 @router.post('/posts/create/', tags=["posts"], status_code=201)
-async def createapost(username: str = Form(), sessionkey: str = Form(),
+async def create_post(username: str = Form(), sessionkey: str = Form(),
                       posttitle: str = Form(), postcontent: str = Form(), attachedmedia: str = Form(),
                       posttopic: str = Form()):
     time_task_started = time.time()
@@ -78,6 +78,6 @@ async def createapost(username: str = Form(), sessionkey: str = Form(),
 
 
 @router.put('/posts/edit/', tags=["posts"], status_code=200)
-async def updateapost(username: str = Form(), sessionkey: str = Form(), postid: int = Form(), posttitle: str = Form(),
+async def update_post(username: str = Form(), sessionkey: str = Form(), postid: int = Form(), posttitle: str = Form(),
                       postcontent: str = Form(), attachedmedia: str = Form(), posttopic: str = Form()):
     return await updatepost(postid, posttitle, postcontent, attachedmedia, posttopic, username, sessionkey)

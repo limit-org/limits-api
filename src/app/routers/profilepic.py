@@ -16,12 +16,12 @@ class profilepic(BaseModel):
 
 
 @router.get('/profilepic/get/{username}', tags=["profilepic"], status_code=200)
-async def serveprofilepic(size: int, username):
+async def serve_profile_pic(size: int, username):
     return await servepfp(str(username), size)
 
 
 @router.post('/profilepic/set/', tags=["profilepic"], status_code=201)
-async def setprofilepic(file: UploadFile = File(), username: str = Form(), sessionkey: str = Form()):
+async def set_profile_pic(file: UploadFile = File(), username: str = Form(), sessionkey: str = Form()):
     time_task_started = time.time()
 
     # check if it's an allowed image type
@@ -43,5 +43,5 @@ async def setprofilepic(file: UploadFile = File(), username: str = Form(), sessi
 
 
 @router.delete('/profilepic/remove/', tags=["profilepic"], status_code=200)
-async def removeprofilepic(username: str = Form(), sessionkey: str = Form()):
+async def remove_profile_pic(username: str = Form(), sessionkey: str = Form()):
     return await removepfp(username, sessionkey)
