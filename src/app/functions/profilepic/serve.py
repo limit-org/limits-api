@@ -80,12 +80,6 @@ async def servepfp(username, size):
                         "error_code": 0
                     }
 
-                # not needed for me, might be for others, so we will leave this here.
-                # # get content type
-                # bytesData = io.BytesIO()
-                # bytesData.write(base64.b64decode(media64))
-                # bytesData.seek(0)  # Jump to the beginning of the file-like interface to read all content!
-
                 # de base64 media
                 media64 = base64.b64decode(media64)
 
