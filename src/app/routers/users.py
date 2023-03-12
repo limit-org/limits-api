@@ -73,7 +73,7 @@ async def create_user(request: Request, username: str = Form(), password: str = 
 
 
 @router.post('/users/login/', tags=["user"], status_code=200)
-async def login(request: Request, username: str = Form(), password: str = Form()):
+async def login_user(request: Request, username: str = Form(), password: str = Form()):
     # lowercase the username
     username = username.lower()
 
@@ -90,7 +90,7 @@ async def get_public_user_details(username):
 
 # let the user logout. (delete their session token)
 @router.post('/users/logout/', tags=["user"], status_code=200)
-async def logout(username: str = Form(), sessionkey: str = Form()):
+async def logout_user(username: str = Form(), sessionkey: str = Form()):
     return await logout(username, sessionkey)
 
 
