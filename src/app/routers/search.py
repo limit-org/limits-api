@@ -7,10 +7,10 @@ router = APIRouter()
 
 
 @router.get('/search/posts/', tags=["search"], status_code=200)
-async def search_posts(searchterm: str, page: int):
-    return await MSSearchPosts(searchterm, page)
+async def search_posts(query: str, page: int):
+    return await MSSearchPosts(query, page)
 
 
 @router.get('/search/users/', tags=["search"], status_code=200)
-async def search_users(searchterm: str, page: int):
-    return await MSSearchUsers(searchterm, page)
+async def search_users(query: str, page: int):
+    return await MSSearchUsers(query, page)
