@@ -6,7 +6,7 @@ from pydantic import BaseModel
 
 from functions.posting.create import makepost
 from functions.posting.update import updatepost
-
+from functions.posting.delete import deletepost
 
 class Post(BaseModel):
     username: str
@@ -81,3 +81,9 @@ async def create_post(username: str = Form(), sessionkey: str = Form(),
 async def update_post(username: str = Form(), sessionkey: str = Form(), postid: int = Form(), posttitle: str = Form(),
                       postcontent: str = Form(), attachedmedia: str = Form(), posttopic: str = Form()):
     return await updatepost(postid, posttitle, postcontent, attachedmedia, posttopic, username, sessionkey)
+
+
+@router.delete('/posts/delete/', tags=["posts"], status_code=200)
+async def delete_post(username: str = Form(), sessionkey: str = Form(), postid: int = Form()):
+    return await deletepost(postid, username, sessionkey)
+

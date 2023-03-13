@@ -24,6 +24,7 @@ Written by Reiko (https://github.com/acreiko)
 ### Posts
  - [x] Send text only posts (see note #0)
  - [x] Send text posts with media (see note #0)
+ - [x] Can delete posts
  
 ### Site Usability
  - [x] Add search capabilities using Meilisearch (see note #2)
@@ -34,9 +35,10 @@ Written by Reiko (https://github.com/acreiko)
  - [ ] Add a way for mods to ban users
  - [ ] Add a way for mods to warn users
  - [ ] Add a way to block other users
- - [ ] Add a way for mods and selves to delete user's posts
+ - [ ] Add a way for mods to delete user's posts
  - [ ] Make site rules (What can users do/not do? What is/isn't allowed to be said or done?)
- - [ ] Block certain users from being able to upload media.
+ - [x] Block certain users from being able to upload media.
+ - [x] Block certain users from being able to post.
 
 ### Media/Documents
  - [x] Allow users to upload media
@@ -59,7 +61,7 @@ Written by Reiko (https://github.com/acreiko)
 - [ ] API whitelists for accessing urls/ports                                                                  (Requires more context)
 - [ ] No weak/default passwords for admin accounts                                                             (To check/fix, ONLY AFTER TESTING PASSWORD HASHING SECURITY)
 - [ ] No plain-text passwords in DB or source code                                                             (To check)
-- [ ] No sensitive system information in user-accessible pages (source, github, api, etc.)                      (To check)
+- [ ] No sensitive system information in user-accessible pages (source, github, api, etc.)                     (To check)
 - [ ] Use LIMIT or equivalent database controls to limit mass disclosure of records.
 - [ ] Use signatures to verify software/data integrity                                                         (Requires more context)
 - [ ] Users can add some sort of 2FA authentication.                                                           (How to implement??)
