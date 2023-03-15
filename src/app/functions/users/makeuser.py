@@ -9,7 +9,7 @@ from ..dbconfig import config
 from ..log import logErrorToDB
 
 
-async def makeUser(username, hashedpassword, email, ipaddress, task_start_time):
+async def makeUser(username, hashedpassword, email, ipaddress):
 
     try:
         conn = psycopg2.connect(config())
@@ -28,14 +28,12 @@ async def makeUser(username, hashedpassword, email, ipaddress, task_start_time):
                     (email,)
                 )
                 if cur.fetchone() is not None:  # if email already exists in the db
-                    time_task_took = time.time() - task_start_time
                     return HTTPException(
                         status_code=409,  # conflict http code
                         detail={
                             "error_code": "1",
                             "error": "Email already in use.",
                             "UIMessage": "This email is already in use.",
-                            "time_took": time_task_took
                         }
                     )
 
@@ -45,14 +43,12 @@ async def makeUser(username, hashedpassword, email, ipaddress, task_start_time):
                     (username,)
                 )
                 if cur.fetchone() is not None:  # if username alr exists in the db
-                    time_task_took = time.time() - task_start_time
                     return HTTPException(
                         status_code=409,  # conflict http code
                         detail={
                             "error_code": "1",
                             "error": "User already exists.",
-                            "UIMessage": "Username is already in use.",
-                            "time_took": time_task_took
+                            "UIMessage": "Username is already in use."
                         }
                     )
 
@@ -73,40 +69,34 @@ async def makeUser(username, hashedpassword, email, ipaddress, task_start_time):
 
                 # let meilisearch index the user. most values are configured later though like if they're a mod,
                 # their bio, etc.
-                await IndexUser(userid, username, "", usertimestamp, "", "", False, False, "", False)
+                await IndexUser(userid, username, alias="", email=email, unixtimejoined=usertimestamp,
+                                bio="", modnotes="", trusted=False, mod=False, badges=None, official=False)
 
-                # calculate time taken to do the thing
-                time_task_took = time.time() - task_start_time
                 return {
                     "detail": {
                         "APImessage": "success",
                         "UIMessage": "You are now signed up. Welcome!",
                         "username": username,
                     },
-                    "time_took": time_task_took,
                     "error_code": 0
                 }
         else:
-            time_task_took = time.time() - task_start_time
             return HTTPException(
                 status_code=500,  # conflict http code
                 detail={
                     "error_code": "1",
                     "error": "Email not valid.",
-                    "UIMessage": "That doesn't look like an email...",
-                    "time_took": time_task_took
+                    "UIMessage": "That doesn't look like an email..."
                 }
             )
 
     except (Exception, psycopg2.DatabaseError):
-        time_task_took = time.time() - task_start_time
-        await logErrorToDB(str(traceback.format_exc()), timetaken=time_task_took)
+        await logErrorToDB(str(traceback.format_exc()))
         raise HTTPException(
             status_code=500,
             detail={
                 "error_code": "1",
                 "http_code": "500",
-                "error": "User signup error.",
-                "time_took": time_task_took
+                "error": "User signup error."
             }
         )

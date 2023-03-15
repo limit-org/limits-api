@@ -11,9 +11,6 @@ from ..log import logErrorToDB
 
 
 async def login(username, password, user_agent, client_host):
-    # start timer
-    task_start_time = time.time()
-
     try:
         conn = psycopg2.connect(config())
         with conn.cursor() as cur:
@@ -27,8 +24,6 @@ async def login(username, password, user_agent, client_host):
             pwdhash = cur.fetchone()
 
             if pwdhash is None:  # User doesnt exist.
-                # calculate time taken to do the thing
-                time_task_took = time.time() - task_start_time
 
                 return {
                     "detail": {
@@ -37,7 +32,6 @@ async def login(username, password, user_agent, client_host):
                         "username": username,
                         "attempt_time": int(str(time.time()).split(".")[0]),
                     },
-                    "time_took": time_task_took,
                     "error_code": 0
                 }
 
@@ -63,8 +57,7 @@ async def login(username, password, user_agent, client_host):
                         (session_token, username)
                     )
                     conn.commit()
-                    # calculate time taken to do the thing
-                    time_task_took = time.time() - task_start_time
+
                     return {
                         "detail": {
                             "APImessage": "success",
@@ -73,7 +66,6 @@ async def login(username, password, user_agent, client_host):
                             "time_logged_in": int(str(time.time()).split(".")[0]),
                             "session": session_token
                         },
-                        "time_took": time_task_took,
                         "error_code": 0
                     }
                 else:
@@ -85,9 +77,6 @@ async def login(username, password, user_agent, client_host):
                     )
                     conn.commit()
 
-                    # calculate time taken to do the thing
-                    time_task_took = time.time() - task_start_time
-
                     return {
                         "detail": {
                             "APImessage": "failure",
@@ -95,19 +84,16 @@ async def login(username, password, user_agent, client_host):
                             "username": username,
                             "attempt_time": int(str(time.time()).split(".")[0]),
                         },
-                        "time_took": time_task_took,
                         "error_code": 0
                     }
 
     except (Exception, psycopg2.DatabaseError):
-        time_task_took = time.time() - task_start_time
-        await logErrorToDB(str(traceback.format_exc()), timetaken=time_task_took)
+        await logErrorToDB(str(traceback.format_exc()))
         raise HTTPException(
             status_code=500,
             detail={
                 "error_code": "1",
                 "http_code": "500",
-                "error": "User signin error.",
-                "time_took": time_task_took
+                "error": "User signin error."
             }
         )

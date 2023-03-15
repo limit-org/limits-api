@@ -1,6 +1,5 @@
 import psycopg2
 from ..dbconfig import config
-import time
 import base64
 from ..log import logErrorToDB
 from fastapi import HTTPException
@@ -9,9 +8,6 @@ import traceback
 
 # func for uploading media to limits
 async def uploadMedia(file, username, sessionkey):
-    # start timer
-    task_start_time = time.time()
-
     try:
         conn = psycopg2.connect(config())
 
@@ -23,7 +19,6 @@ async def uploadMedia(file, username, sessionkey):
             sessioncookie = cur.fetchone()
 
             if sessioncookie is None:  # if the user doesn't exist or never logged in
-                time_task_took = time.time() - task_start_time
                 return {
                     "detail": {
                         "APImessage": "failure",
@@ -31,7 +26,6 @@ async def uploadMedia(file, username, sessionkey):
                         "username": username,
                         "attempt_time": int(str(time.time()).split(".")[0]),
                     },
-                    "time_took": time_task_took,
                     "error_code": 0
                 }
 
@@ -40,7 +34,6 @@ async def uploadMedia(file, username, sessionkey):
                 cur.execute("SELECT (allowedtoupload) FROM users WHERE username=%s",
                             (username,))
                 if not cur.fetchone()[0]:
-                    time_task_took = time.time() - task_start_time
                     return {
                         "detail": {
                             "APImessage": "failure",
@@ -49,7 +42,6 @@ async def uploadMedia(file, username, sessionkey):
                             "username": username,
                             "attempt_time": int(str(time.time()).split(".")[0]),
                         },
-                        "time_took": time_task_took,
                         "error_code": 0
                     }
 
@@ -122,7 +114,7 @@ async def uploadMedia(file, username, sessionkey):
 
     except (Exception, psycopg2.DatabaseError):
         time_task_took = time.time() - task_start_time
-        await logErrorToDB(str(traceback.format_exc()), timetaken=time_task_took)
+        await logErrorToDB(str(traceback.format_exc()))
         raise HTTPException(
             status_code=500,
             detail={

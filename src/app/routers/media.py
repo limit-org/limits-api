@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Form, UploadFile, HTTPException, File
 from pydantic import BaseModel
-import time
 
 from functions.media.upload import uploadMedia
 from functions.media.serve import servemedia
@@ -15,8 +14,6 @@ class Media(BaseModel):
 
 @router.post("/media/upload", tags=["media"], status_code=201)
 async def upload_media(file: UploadFile = File(), username: str = Form(), sessionkey: str = Form()):
-    time_task_started = time.time()
-
     # all allowed media types. (media is considered audio, video and images)
     allowed_audio_types = ["audio/aac", "audio/mpeg", "audio/ogg", "audio/opus", "audio/wav", "audio/webm"]
     allowed_video_types = ["video/webm", "video/mp4", "video/quicktime", "video/ogg"]
@@ -27,14 +24,12 @@ async def upload_media(file: UploadFile = File(), username: str = Form(), sessio
     if file.content_type in allowed_types:
         return await uploadMedia(file, username, sessionkey)
     else:
-        time_task_took = time.time() - time_task_started
         return HTTPException(
             status_code=415,  # Unsupported Media Type
             detail={
                 "error_code": "1",
                 "error": "Invalid media format.",
                 "UIMessage": "That media format isn't allowed.",
-                "time_took": time_task_took
             }
         )
 

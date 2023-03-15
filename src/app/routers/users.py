@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Header, Form, Request
 from pydantic import BaseModel
 import bcrypt
-import time
 
 from functions.users.makeuser import makeUser
 from functions.users.getpublicuserdetails import getpublicuserinfo
@@ -26,43 +25,35 @@ class User(BaseModel):
 
 @router.post('/users/create/', tags=["user"], status_code=201)
 async def create_user(request: Request, username: str = Form(), password: str = Form(), email: str = Form()):
-    time_task_started = time.time()
-
     # lowercase the username
     username = username.lower()
 
     # check username
     if len(username) <= 2:  # equal to or less than 2 chars
-        time_task_took = time.time() - time_task_started
         return {
             "detail": {
                 "error_code": "1",
                 "error": "Username not long enough.",
                 "UIMessage": "Username needs to be at least 3 characters long.",
-                "time_took": time_task_took
             }
         }
     if len(username) >= 26:
-        time_task_took = time.time() - time_task_started
         return {
             "detail": {
                 "error_code": "1",
                 "error": "Username too long.",
                 "UIMessage": "Usernames can only be 25 characters long.",
-                "time_took": time_task_took
             }
         }
 
     # does password conform to standards?
     pwc = CheckPassword(plainTextPass=password, username=username)
     if pwc != 0:
-        time_task_took = time.time() - time_task_started
         return {
             "detail": {
                 "error_code": "1",
                 "error": str(pwc["err"]),
                 "UIMessage": str(pwc["ui"]),
-                "time_took": time_task_took
             }
         }
 
@@ -72,7 +63,7 @@ async def create_user(request: Request, username: str = Form(), password: str = 
     hashed_password = str(bcrypt.hashpw(str(password).encode('utf-8'), salt)).replace("'", "\"")
 
     ipaddress = request.client.host
-    return await makeUser(username, hashed_password, email, ipaddress, time_task_started)
+    return await makeUser(username, hashed_password, email, ipaddress)
 
 
 @router.post('/users/login/', tags=["user"], status_code=200)

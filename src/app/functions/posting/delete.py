@@ -1,12 +1,9 @@
-import csv
-
 import psycopg2
 from ..dbconfig import config
 import time
 from functions.log import logErrorToDB
 from fastapi import HTTPException
 import traceback
-from ..istrustedormod import checkTORM
 from ..meilisearch.MSIndex import IndexPost
 
 
@@ -109,7 +106,7 @@ async def deletepost(postid, username, sessionkey):
 
     except (Exception, psycopg2.DatabaseError):
         time_task_took = time.time() - task_start_time
-        await logErrorToDB(str(traceback.format_exc()), timetaken=time_task_took)
+        await logErrorToDB(str(traceback.format_exc()))
         raise HTTPException(
             status_code=500,
             detail={

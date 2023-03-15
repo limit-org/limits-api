@@ -1,16 +1,14 @@
-import time
 import csv
+import traceback
+
 import psycopg2
 from fastapi import HTTPException
-import traceback
 
 from ..dbconfig import config
 from ..log import logErrorToDB
 
 
 async def getpublicuserinfo(username):
-    # start timer
-    task_start_time = time.time()
 
     try:
         conn = psycopg2.connect(config())
@@ -25,14 +23,9 @@ async def getpublicuserinfo(username):
             DBValue = cur.fetchone()
 
             if DBValue is not None:  # if username already exists in the db
-                # calculate time taken to do the thing
-                time_task_took = time.time() - task_start_time
-
-                # Parse the string using the csv module
+                # parse values about user into variables
                 reader = csv.reader(DBValue, delimiter=',', quotechar='"')
-                # Extract the fields and convert them to a list
                 fields = list(reader)[0]
-                # Extract the individual values from the list
                 user_id, username, alias, unixjoin, bio, modnotes, is_trusted, is_mod, badges, email, is_email_public, \
                     is_official = fields
 
@@ -60,29 +53,24 @@ async def getpublicuserinfo(username):
                             "official": is_official
                         },
                     },
-                    "time_took": time_task_took,
                     "error_code": 0
                 }
             else:
-                time_task_took = time.time() - task_start_time
                 return {
                     "detail": {
                         "error_code": "1",
                         "error": "User does not exist.",
                         "UIMessage": "That user does not exist.",
-                        "time_took": time_task_took
                     }
                 }
 
     except (Exception, psycopg2.DatabaseError):
-        time_task_took = time.time() - task_start_time
-        await logErrorToDB(str(traceback.format_exc()), timetaken=int(time_task_took))
+        await logErrorToDB(str(traceback.format_exc()))
         raise HTTPException(
             status_code=500,
             detail={
                 "error_code": "1",
                 "http_code": "500",
                 "error": "SQL query error.",
-                "time_took": time_task_took
             }
         )

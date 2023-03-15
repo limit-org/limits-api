@@ -19,7 +19,7 @@ async def MSSearchPosts(searchterm: str, page: int):
         })  # search for {searchterm} on page {page}
         return result  # return search results
     except (Exception, meilisearch.client.MeiliSearchError):
-        await logErrorToDB(str(traceback.format_exc()), timetaken=0)
+        await logErrorToDB(str(traceback.format_exc()))
         raise HTTPException(
             status_code=500,
             detail={
@@ -44,7 +44,7 @@ async def MSSearchUsers(searchterm: str, page: int):
         })  # search for {searchterm} on page {page}
         return result  # return search results
     except (Exception, meilisearch.client.MeiliSearchError):
-        await logErrorToDB(str(traceback.format_exc()), timetaken=0)
+        await logErrorToDB(str(traceback.format_exc()))
         raise HTTPException(
             status_code=500,
             detail={

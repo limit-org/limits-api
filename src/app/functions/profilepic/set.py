@@ -11,23 +11,18 @@ import traceback
 
 
 async def setpfp(file, username, sessionkey):
-    # start timer
-    task_start_time = time.time()
-
     try:
         conn = psycopg2.connect(config())
 
         # check the file size.
         fc = await file.read()
         if len(fc) > 2097152:  # if greater than exactly 2 MB
-            time_task_took = time.time() - task_start_time
             return HTTPException(
                 status_code=500,  # conflict http code
                 detail={
                     "error_code": "1",
                     "error": "File too large.",
                     "UIMessage": "That picture is too large. Profile pictures can only be less than 2MB.",
-                    "time_took": time_task_took
                 }
             )
 
@@ -39,7 +34,6 @@ async def setpfp(file, username, sessionkey):
             sessioncookie = cur.fetchone()
 
             if sessioncookie is None:
-                time_task_took = time.time() - task_start_time
                 return {
                     "detail": {
                         "APImessage": "failure",
@@ -47,7 +41,6 @@ async def setpfp(file, username, sessionkey):
                         "username": username,
                         "attempt_time": int(str(time.time()).split(".")[0]),
                     },
-                    "time_took": time_task_took,
                     "error_code": 0
                 }
 
@@ -57,7 +50,6 @@ async def setpfp(file, username, sessionkey):
                             (username,))
                 allowedtoupload = cur.fetchone()
                 if not allowedtoupload[0]:
-                    time_task_took = time.time() - task_start_time
                     return {
                         "detail": {
                             "APImessage": "failure",
@@ -66,14 +58,11 @@ async def setpfp(file, username, sessionkey):
                             "username": username,
                             "attempt_time": int(str(time.time()).split(".")[0]),
                         },
-                        "time_took": time_task_took,
                         "error_code": 0
                     }
 
                 # they're allowed to upload files. check if session is correct.
                 if sessioncookie[0] == sessionkey:  # correct sesh key
-                    time_task_took = time.time() - task_start_time
-
                     # crop media to a 512x512 square.
 
                     img = Image.open(io.BytesIO(fc)).convert("RGB")
@@ -126,7 +115,6 @@ async def setpfp(file, username, sessionkey):
                                 "username": username,
                                 "userid": userid
                             },
-                            "time_took": time_task_took,
                             "error_code": 0
                         }
 
@@ -145,12 +133,10 @@ async def setpfp(file, username, sessionkey):
                                 "username": username,
                                 "userid": userid
                             },
-                            "time_took": time_task_took,
                             "error_code": 0
                         }
 
                 else:  # session is wrong
-                    time_task_took = time.time() - task_start_time
                     return {
                         "detail": {
                             "APImessage": "failure",
@@ -159,28 +145,22 @@ async def setpfp(file, username, sessionkey):
                             "username": username,
                             "attempt_time": int(str(time.time()).split(".")[0]),
                         },
-                        "time_took": time_task_took,
                         "error_code": 0
                     }
 
     except (Exception, psycopg2.DatabaseError):
-        time_task_took = time.time() - task_start_time
-        await logErrorToDB(str(traceback.format_exc()), timetaken=time_task_took)
+        await logErrorToDB(str(traceback.format_exc()))
         raise HTTPException(
             status_code=500,
             detail={
                 "error_code": "1",
                 "http_code": "500",
                 "error": "Media upload error.",
-                "time_took": time_task_took
             }
         )
 
 
 async def removepfp(username, sessionkey):
-    # start timer
-    task_start_time = time.time()
-
     try:
         conn = psycopg2.connect(config())
 
@@ -192,7 +172,6 @@ async def removepfp(username, sessionkey):
             sessioncookie = cur.fetchone()
 
             if sessioncookie is None:
-                time_task_took = time.time() - task_start_time
                 return {
                     "detail": {
                         "APImessage": "failure",
@@ -200,14 +179,11 @@ async def removepfp(username, sessionkey):
                         "username": username,
                         "attempt_time": int(str(time.time()).split(".")[0]),
                     },
-                    "time_took": time_task_took,
                     "error_code": 0
                 }
 
             else:  # user exists
                 if sessioncookie[0] == sessionkey:  # correct sesh key
-                    time_task_took = time.time() - task_start_time
-
                     # get user id
                     cur.execute(
                         "SELECT (userid) FROM users WHERE username=%s",
@@ -230,7 +206,6 @@ async def removepfp(username, sessionkey):
                                 "username": username,
                                 "userid": userid
                             },
-                            "time_took": time_task_took,
                             "error_code": 0
                         }
 
@@ -248,12 +223,10 @@ async def removepfp(username, sessionkey):
                                 "username": username,
                                 "userid": userid
                             },
-                            "time_took": time_task_took,
                             "error_code": 0
                         }
 
                 else:  # session is wrong
-                    time_task_took = time.time() - task_start_time
                     return {
                         "detail": {
                             "APImessage": "failure",
@@ -262,19 +235,16 @@ async def removepfp(username, sessionkey):
                             "username": username,
                             "attempt_time": int(str(time.time()).split(".")[0]),
                         },
-                        "time_took": time_task_took,
                         "error_code": 0
                     }
 
     except (Exception, psycopg2.DatabaseError):
-        time_task_took = time.time() - task_start_time
-        await logErrorToDB(str(traceback.format_exc()), timetaken=time_task_took)
+        await logErrorToDB(str(traceback.format_exc()))
         raise HTTPException(
             status_code=500,
             detail={
                 "error_code": "1",
                 "http_code": "500",
                 "error": "Media upload error.",
-                "time_took": time_task_took
             }
         )

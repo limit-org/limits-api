@@ -1,7 +1,5 @@
 import csv
-import time
 import psycopg2
-from fastapi import HTTPException, Response
 from fastapi.responses import JSONResponse
 import traceback
 
@@ -89,7 +87,7 @@ async def updateBio(username, userSessionKey, newBio):
                 })
 
     except (Exception, psycopg2.DatabaseError):
-        await logErrorToDB(str(traceback.format_exc()), timetaken=0)  # log this error to the database.
+        await logErrorToDB(str(traceback.format_exc()))  # log this error to the database.
         return JSONResponse(status_code=500, content={
             "detail": {
                 "error": "Bio update error.",
@@ -187,7 +185,7 @@ async def updateUsername(currentUsername, userSessionKey, newUsername):
                 })
 
     except (Exception, psycopg2.DatabaseError):
-        await logErrorToDB(str(traceback.format_exc()), timetaken=0)
+        await logErrorToDB(str(traceback.format_exc()))
         return JSONResponse(status_code=500, content={
             "detail": {
                 "error": "User profile update error.",
@@ -279,7 +277,7 @@ async def updateEmailPublicity(username, userSessionKey, emailIsPublic):
                 })
 
     except (Exception, psycopg2.DatabaseError):
-        await logErrorToDB(str(traceback.format_exc()), timetaken=0)
+        await logErrorToDB(str(traceback.format_exc()))
         return JSONResponse(status_code=500, content={
             "detail": {
                 "error": "User profile update error.",
@@ -366,7 +364,7 @@ async def updateUserAlias(username, userSessionKey, alias):
                 })
 
     except (Exception, psycopg2.DatabaseError):
-        await logErrorToDB(str(traceback.format_exc()), timetaken=0)
+        await logErrorToDB(str(traceback.format_exc()))
         return JSONResponse(status_code=500, content={
             "detail": {
                 "error": "User alias update error.",

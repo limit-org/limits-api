@@ -8,6 +8,7 @@ from functions.posting.create import makepost
 from functions.posting.update import updatepost
 from functions.posting.delete import deletepost
 
+
 class Post(BaseModel):
     username: str
     sessionkey: str
@@ -24,7 +25,6 @@ router = APIRouter()
 async def create_post(username: str = Form(), sessionkey: str = Form(),
                       posttitle: str = Form(), postcontent: str = Form(), attachedmedia: str = Form(),
                       posttopic: str = Form()):
-    time_task_started = time.time()
 
     post_topics = [
         "meta/news",  # for everything related to news for this site
@@ -49,7 +49,6 @@ async def create_post(username: str = Form(), sessionkey: str = Form(),
     # ADD MORE
 
     if posttopic not in post_topics:
-        time_task_took = time.time() - time_task_started
         return {
             "detail": {
                 "APImessage": "failure",
@@ -58,11 +57,9 @@ async def create_post(username: str = Form(), sessionkey: str = Form(),
                 "username": username,
                 "attempt_time": int(str(time.time()).split(".")[0]),
             },
-            "time_took": time_task_took,
             "error_code": 0
         }
     if len(posttitle) > 101:  # 100 or less
-        time_task_took = time.time() - time_task_started
         return {
             "detail": {
                 "APImessage": "failure",
@@ -71,7 +68,6 @@ async def create_post(username: str = Form(), sessionkey: str = Form(),
                 "username": username,
                 "attempt_time": int(str(time.time()).split(".")[0]),
             },
-            "time_took": time_task_took,
             "error_code": 0
         }
     return await makepost(posttitle, postcontent, attachedmedia, posttopic, username, sessionkey)

@@ -100,7 +100,7 @@ async def servepfp(username, size):
 
     except (Exception, psycopg2.DatabaseError):
         time_task_took = time.time() - task_start_time
-        await logErrorToDB(str(traceback.format_exc()), timetaken=time_task_took)
+        await logErrorToDB(str(traceback.format_exc()))
         raise HTTPException(
             status_code=500,
             detail={
