@@ -25,7 +25,7 @@ async def IndexPost(postid: int, authorid: int, authorusername: str, title: str,
     )
 
 
-async def IndexUser(userid, username, alias, unixtimejoined, bio, modnotes, trusted, mod, badges, official):
+async def IndexUser(userid, username, alias, email, unixtimejoined, bio, modnotes, trusted, mod, badges, official):
     msdb = meilisearchConfig()[0]
     msdbkey = meilisearchConfig()[1]
     client = meilisearch.Client(msdb, msdbkey)
@@ -34,6 +34,7 @@ async def IndexUser(userid, username, alias, unixtimejoined, bio, modnotes, trus
         'id': int(userid),  # a meilisearch user id is
         'username': str(username),
         'alias': str(alias),
+        'email': str(email),
         'unixtime_joined': unixtimejoined,
         'bio': bio,
         'modnotes': modnotes,
