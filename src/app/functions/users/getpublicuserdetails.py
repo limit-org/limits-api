@@ -41,7 +41,7 @@ async def getpublicuserinfo(username):
                 is_official = is_official[:-1]
 
                 if is_email_public == "f":
-                    email = "[REDACTED]"
+                    email = "[REDACTED DUE TO USERS PRIVACY CHOICES.]"
 
                 return {
                     "detail": {
