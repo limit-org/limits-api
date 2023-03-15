@@ -8,8 +8,11 @@ from functions.users.getpublicuserdetails import getpublicuserinfo
 from functions.users.login import login
 from functions.users.logout import logout
 from functions.users.changepassword import changepwd
-from functions.users.update import updateUser
 from functions.passwordstandards import CheckPassword
+from functions.users.update import updateUsername
+from functions.users.update import updateBio
+from functions.users.update import updateEmailPublicity
+from functions.users.update import updateUserAlias
 
 router = APIRouter()
 
@@ -82,7 +85,7 @@ async def login_user(request: Request, username: str = Form(), password: str = F
     return await login(username, password, user_agent, client_host)
 
 
-# return "public-safe" user details. that is stuff like user id, username, email (if user chooses to share it)
+# return "public-safe" user details. that is stuff like user id, alias, username, email (if user chooses to share it)
 @router.get('/users/get/{username}/', tags=["user"], status_code=200)
 async def get_public_user_details(username):
     return await getpublicuserinfo(username.lower())
@@ -94,14 +97,28 @@ async def logout_user(username: str = Form(), sessionkey: str = Form()):
     return await logout(username, sessionkey)
 
 
-@router.put('/users/resetpassword/', tags=["user"], status_code=200)
+@router.put('/users/reset/password/', tags=["user"], status_code=200)
 async def change_password(request: Request, username: str = Form(), password: str = Form(), newpass: str = Form()):
     client_host = request.client.host
     user_agent = Header(default=None)
     return await changepwd(username, password, newpass, client_host, user_agent)
 
 
-@router.put('/users/updateprofile/', tags=["user"], status_code=200)
-async def update_profile(username: str = Form(), usersessionkey: str = Form(), newusername: str = Form(),
-                         newbio: str = Form(), emailispublic: str = Form(), newalias: str = Form()):
-    return await updateUser(username, usersessionkey, newusername, newbio, emailispublic, newalias)
+@router.put('/users/update/username/', tags=["user"], status_code=200)
+async def update_username(username: str = Form(), usersessionkey: str = Form(), newusername: str = Form()):
+    return await updateUsername(username, usersessionkey, newusername)
+
+
+@router.put('/users/update/bio/', tags=["user"], status_code=200)
+async def update_bio(username: str = Form(), usersessionkey: str = Form(), newbio: str = Form()):
+    return await updateBio(username, usersessionkey, newbio)
+
+
+@router.put('/users/update/email/publicity/', tags=["user"], status_code=200)
+async def update_email_publicity(username: str = Form(), usersessionkey: str = Form(), makeEmailPublic: bool = Form()):
+    return await updateEmailPublicity(username, usersessionkey, makeEmailPublic)
+
+
+@router.put('/users/update/alias/', tags=["user"], status_code=200)
+async def update_email_publicity(username: str = Form(), usersessionkey: str = Form(), alias: str = Form()):
+    return await updateUserAlias(username, usersessionkey, alias)
