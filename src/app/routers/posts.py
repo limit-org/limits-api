@@ -4,9 +4,9 @@ from fastapi import APIRouter
 from fastapi import Form
 from pydantic import BaseModel
 
-from functions.posting.create import makepost
-from functions.posting.update import updatepost
-from functions.posting.delete import deletepost
+from .functions.posting.create import makepost
+from .functions.posting.update import updatepost
+from .functions.posting.delete import deletepost
 
 
 class Post(BaseModel):

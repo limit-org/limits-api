@@ -1,9 +1,9 @@
 from fastapi import APIRouter, UploadFile, File, Form, HTTPException
 from pydantic import BaseModel
 
-from functions.profilepic.serve import servepfp
-from functions.profilepic.set import setpfp
-from functions.profilepic.set import removepfp
+from .functions.profilepic.serve import servepfp
+from .functions.profilepic.set import setpfp
+from .functions.profilepic.set import removepfp
 
 router = APIRouter()
 

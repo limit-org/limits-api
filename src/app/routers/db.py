@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from functions.db import returnVersion
+from .functions.db import returnVersion
 
 router = APIRouter()
 

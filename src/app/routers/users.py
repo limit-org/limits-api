@@ -2,16 +2,16 @@ from fastapi import APIRouter, Header, Form, Request
 from pydantic import BaseModel
 import bcrypt
 
-from functions.users.makeuser import makeUser
-from functions.users.getpublicuserdetails import getpublicuserinfo
-from functions.users.login import login
-from functions.users.logout import logout
-from functions.users.changepassword import changepwd
-from functions.passwordstandards import CheckPassword
-from functions.users.update import updateUsername
-from functions.users.update import updateBio
-from functions.users.update import updateEmailPublicity
-from functions.users.update import updateUserAlias
+from .functions.users.makeuser import makeUser
+from .functions.users.getpublicuserdetails import getpublicuserinfo
+from .functions.users.login import login
+from .functions.users.logout import logout
+from .functions.users.changepassword import changepwd
+from .functions.passwordstandards import CheckPassword
+from .functions.users.update import updateUsername
+from .functions.users.update import updateBio
+from .functions.users.update import updateEmailPublicity
+from .functions.users.update import updateUserAlias
 
 router = APIRouter()
 

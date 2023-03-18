@@ -1,6 +1,6 @@
 # import psycopg2
 # from .dbconfig import config
-# from functions.log import logErrorToDB
+# from .functions.log import logErrorToDB
 # from fastapi import HTTPException
 # import traceback
 from fastapi.responses import JSONResponse

@@ -2,7 +2,7 @@ import psycopg2
 from ..dbconfig import config
 import time
 import base64
-from functions.log import logErrorToDB
+from .functions.log import logErrorToDB
 from fastapi import HTTPException, Response
 import traceback
 

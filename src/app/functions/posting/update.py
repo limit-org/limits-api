@@ -1,7 +1,7 @@
 import psycopg2
 from ..dbconfig import config
 import time
-from functions.log import logErrorToDB
+from .functions.log import logErrorToDB
 from fastapi import HTTPException
 import traceback
 from ..istrustedormod import checkTORM

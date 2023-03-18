@@ -3,7 +3,7 @@ from ..dbconfig import meilisearchConfig
 from fastapi import HTTPException
 import traceback
 
-from functions.log import logErrorToDB
+from .functions.log import logErrorToDB
 
 
 # func for searching posts
