@@ -2,7 +2,7 @@
   "devCommand": "uvicorn main-apibackend:app --host 0.0.0.0 --port 3000",
   "builds": [
     {
-      "src": "src/app",
+      "src": "src/app/main-apibackend.py",
       "use": "@vercel/python"
     }
   ],
