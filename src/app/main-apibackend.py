@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 
-from routers import db
-from routers import users
-from routers import media
-from routers import posts
-from routers import search
-from routers import profilepic
+from .routers import db
+from .routers import users
+from .routers import media
+from .routers import posts
+from .routers import search
+from .routers import profilepic
 
 
 # init fastapi thingy
