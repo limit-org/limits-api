@@ -1,9 +1,9 @@
-import psycopg2
-from .dbconfig import config
-from functions.log import logErrorToDB
-from fastapi import HTTPException
+# import psycopg2
+# from .dbconfig import config
+# from functions.log import logErrorToDB
+# from fastapi import HTTPException
+# import traceback
 from fastapi.responses import JSONResponse
-import traceback
 
 
 # this func. returns the version of the sql database.
