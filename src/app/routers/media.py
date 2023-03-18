@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Form, UploadFile, HTTPException, File
 from pydantic import BaseModel
 
-from .functions.media.upload import uploadMedia
-from .functions.media.serve import servemedia
+from functions.media.upload import uploadMedia
+from functions.media.serve import servemedia
 
 router = APIRouter()
 

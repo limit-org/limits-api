@@ -5,7 +5,7 @@ from PIL import Image
 from ..dbconfig import config
 import time
 import base64
-from .functions.log import logErrorToDB
+from functions.log import logErrorToDB
 from fastapi import HTTPException
 import traceback
 
