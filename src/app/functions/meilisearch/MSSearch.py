@@ -1,4 +1,4 @@
-import meilisearch
+import meilisearch_python_async
 from ..dbconfig import meilisearchConfig
 from fastapi import HTTPException
 import traceback
@@ -11,14 +11,11 @@ async def MSSearchPosts(searchterm: str, page: int):
     try:
         msdb = meilisearchConfig()[0]
         msdbkey = meilisearchConfig()[1]
-        client = meilisearch.Client(msdb, msdbkey)
-
-        index = client.index('posts')  # set index to posts
-        result = index.search(searchterm, {
-            'offset': page
-        })  # search for {searchterm} on page {page}
+        async with meilisearch_python_async.Client(msdb, msdbkey) as client:
+            index = client.index('posts')  # set index to posts
+            result = await index.search(searchterm, offset=page)  # search for {searchterm} on page {page}
         return result  # return search results
-    except (Exception, meilisearch.client.MeiliSearchError):
+    except (Exception, meilisearch_python_async.errors.MeilisearchError):
         await logErrorToDB(str(traceback.format_exc()))
         raise HTTPException(
             status_code=500,
@@ -36,14 +33,11 @@ async def MSSearchUsers(searchterm: str, page: int):
     try:
         msdb = meilisearchConfig()[0]
         msdbkey = meilisearchConfig()[1]
-        client = meilisearch.Client(msdb, msdbkey)
-
-        index = client.index('users')  # set index to users
-        result = index.search(searchterm, {
-            'offset': page
-        })  # search for {searchterm} on page {page}
+        async with meilisearch_python_async.Client(msdb, msdbkey) as client:
+            index = client.index('users')  # set index to users
+            result = await index.search(searchterm, offset=page)  # search for {searchterm} on page {page}
         return result  # return search results
-    except (Exception, meilisearch.client.MeiliSearchError):
+    except (Exception, meilisearch_python_async.errors.MeilisearchError):
         await logErrorToDB(str(traceback.format_exc()))
         raise HTTPException(
             status_code=500,
