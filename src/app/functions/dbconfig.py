@@ -1,7 +1,7 @@
 from configparser import ConfigParser
 
 
-def config(filename='../../database.ini', section='db'):
+def config(filename='database.ini', section='db'):
     # create a parser
     parser = ConfigParser()
     # read config file
@@ -20,7 +20,7 @@ def config(filename='../../database.ini', section='db'):
     return db
 
 
-def meilisearchConfig(filename='../../database.ini', section='ms'):
+def meilisearchConfig(filename='database.ini', section='ms'):
     # create a parser
     parser = ConfigParser()
     # read config file
