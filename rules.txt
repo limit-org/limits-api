@@ -1,6 +1,8 @@
 Usernames:
  - Min 3 chars
  - Max 25 chars
+ - Required to only include any lowercase english letter or number or underscores.
+ - Must contain at least 1 letter or number. cannot be: "___".
 
 
 Passwords:
