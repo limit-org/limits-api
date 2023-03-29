@@ -111,5 +111,5 @@ async def update_email_publicity(username: str = Form(), usersessionkey: str = F
 
 
 @router.put('/users/update/alias/', tags=["user"], status_code=200)
-async def update_email_publicity(username: str = Form(), usersessionkey: str = Form(), alias: str = Form()):
+async def update_alias(username: str = Form(), usersessionkey: str = Form(), alias: str = Form()):
     return await updateUserAlias(username, usersessionkey, alias)
