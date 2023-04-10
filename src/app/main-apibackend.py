@@ -5,6 +5,7 @@ from fastapi.responses import RedirectResponse
 import meilisearch
 import uvicorn
 
+from routers import translate
 from routers import db
 from routers import users
 from routers import media
@@ -45,6 +46,11 @@ app.include_router(
 app.include_router(
     profilepic.router,
     tags=["profilepic"]
+)
+
+app.include_router(
+    translate.router,
+    tags=["translate"]
 )
 
 
