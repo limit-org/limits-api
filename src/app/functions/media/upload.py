@@ -1,4 +1,5 @@
 import psycopg2
+import time
 from ..dbconfig import config
 import base64
 from ..log import logErrorToDB
@@ -24,7 +25,6 @@ async def uploadMedia(file, username, sessionkey):
                         "APImessage": "failure",
                         "UIMessage": "That user does not exist.",
                         "username": username,
-                        "attempt_time": int(str(time.time()).split(".")[0]),
                     },
                     "error_code": 0
                 }
@@ -40,25 +40,20 @@ async def uploadMedia(file, username, sessionkey):
                             "error": "User not allowed to upload files.",
                             "UIMessage": "You're not allowed to upload files to Limits.",
                             "username": username,
-                            "attempt_time": int(str(time.time()).split(".")[0]),
                         },
                         "error_code": 0
                     }
 
                 if sessioncookie[0] == sessionkey:  # correct sesh key
-                    time_task_took = time.time() - task_start_time
-
                     # check the file size.
                     fc = await file.read()
                     if len(fc) > 10485760:  # if greater than exactly 10 MB
-                        time_task_took = time.time() - task_start_time
                         return HTTPException(
                             status_code=400,  # bad request
                             detail={
-                                "error_code": "1",
+                                "error_code": 1,
                                 "error": "File too large.",
-                                "UIMessage": "That picture is too large. Media can only be 10MB or less.",
-                                "time_took": time_task_took
+                                "UIMessage": "That file is too large. They can only be 10MB or less.",
                             }
                         )
 
@@ -92,28 +87,22 @@ async def uploadMedia(file, username, sessionkey):
                             "contentid": str(int(highest_id) + 1),
                             "filename": file.filename,
                             "username": username,
-                            "attempt_time": int(str(time.time()).split(".")[0]),
                         },
-                        "time_took": time_task_took,
                         "error_code": 0
                     }
 
                 else:  # session is wrong
-                    time_task_took = time.time() - task_start_time
                     return {
                         "detail": {
                             "APImessage": "failure",
                             "error": "Invalid session key.",
                             "UIMessage": "Invalid session key.",
                             "username": username,
-                            "attempt_time": int(str(time.time()).split(".")[0]),
                         },
-                        "time_took": time_task_took,
                         "error_code": 0
                     }
 
     except (Exception, psycopg2.DatabaseError):
-        time_task_took = time.time() - task_start_time
         await logErrorToDB(str(traceback.format_exc()))
         raise HTTPException(
             status_code=500,
@@ -121,6 +110,5 @@ async def uploadMedia(file, username, sessionkey):
                 "error_code": "1",
                 "http_code": "500",
                 "error": "Media upload error.",
-                "time_took": time_task_took
             }
         )
